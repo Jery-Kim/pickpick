@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>:: U-Listing Directory - Listing HTML Template ::</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.png">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="stylesheet" href="css/mmenu.css">
+  <link rel="stylesheet" href="css/style.css" id="colors">
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet"
+    type="text/css">
+  <style>
+    body {
+      padding: 1.5em;
+      background: #f5f5f5
+    }
+
+    table {
+      border: 1px #a39485 solid;
+      font-size: .9em;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    thead {
+      font-weight: bold;
+      color: #fff;
+      background: #73685d;
+    }
+
+    td,
+    th {
+      padding: 1em .5em;
+      vertical-align: middle;
+    }
+
+    td {
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      background: #fff;
+    }
+
+    a {
+      color: #73685d;
+    }
+
+    @media all and (max-width: 768px) {
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      th {
+        text-align: right;
+      }
+
+      table {
+        position: relative;
+        padding-bottom: 0;
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+      }
+
+      thead {
+        float: left;
+        white-space: nowrap;
+      }
+
+      tbody {
+        overflow-x: auto;
+        overflow-y: hidden;
+        position: relative;
+        white-space: nowrap;
+      }
+
+      tr {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      th {
+        border-bottom: 1px solid #a39485;
+      }
+
+      td {
+        border-bottom: 1px solid #e5e5e5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader Start -->
+  <div class="preloader">
+    <div class="utf-preloader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <!-- Preloader End -->
+  <!-- Wrapper -->
+  <div id="main_wrapper">
+    <header id="header_part" class="fullwidth">
+      <div id="header">
+        <div class="container">
+          <div class="utf_left_side">
+            <div id="logo"> <a href="index_1.html"><img src="images/logo.png" alt=""></a> </div>
+            <div class="mmenu-trigger">
+              <button class="hamburger utfbutton_collapse" type="button">
+                <span class="utf_inner_button_box">
+                  <span class="utf_inner_section"></span>
+                </span>
+              </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="utf_right_side">
+            <div class="header_widget">
+              <div class="dashboard_header_button_item has-noti js-item-menu">
+                <i class="sl sl-icon-bell"></i>
+                <div class="dashboard_notifi_dropdown js-dropdown">
+                  <div class="dashboard_notifi_title">
+                    <p>You Have 2 Notifications</p>
+                  </div>
+                  <div class="dashboard_notifi_item">
+                    <div class="bg-c1 red">
+                      <i class="fa fa-check"></i>
+                    </div>
+                    <div class="content">
+                      <p>Your Listing <b>Burger House (MG Road)</b> Has Been Approved!</p>
+                      <span class="date">2 hours ago</span>
+                    </div>
+                  </div>
+                  <div class="dashboard_notifi_item">
+                    <div class="bg-c1 green">
+                      <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="content">
+                      <p>You Have 7 Unread Messages</p>
+                      <span class="date">5 hours ago</span>
+                    </div>
+                  </div>
+                  <div class="dashboard_notify_bottom text-center pad-tb-20">
+                    <a href="#">View All Notification</a>
+                  </div>
+                </div>
+              </div>
+              <div class="utf_user_menu">
+                <div class="utf_user_name"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Hi, John!</div>
+                <ul>
+                  <li><a href="dashboard.html"><i class="sl sl-icon-layers"></i> Dashboard</a></li>
+                  <li><a href="dashboard_my_profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                  <li><a href="dashboard_my_listing.html"><i class="sl sl-icon-list"></i> My Listing</a></li>
+                  <li><a href="dashboard_messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+                  <li><a href="dashboard_bookings.html"><i class="sl sl-icon-docs"></i> Booking</a></li>
+                  <li><a href="index_1.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+            <div class="small_dialog_header">
+              <h3>Sign In</h3>
+            </div>
+            <div class="utf_signin_form style_one">
+              <ul class="utf_tabs_nav">
+                <li class=""><a href="#tab1">Log In</a></li>
+                <li><a href="#tab2">Register</a></li>
+              </ul>
+              <div class="tab_container alt">
+                <div class="tab_content" id="tab1" style="display:none;">
+                  <form method="post" class="login">
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="username">
+                        <input type="text" class="input-text" name="username" id="username" value=""
+                          placeholder="Username" />
+                      </label>
+                    </p>
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="password">
+                        <input class="input-text" type="password" name="password" id="password"
+                          placeholder="Password" />
+                      </label>
+                    </p>
+                    <div class="utf_row_form utf_form_wide_block form_forgot_part"> <span class="lost_password fl_left">
+                        <a href="javascript:void(0);">Forgot Password?</a> </span>
+                      <div class="checkboxes fl_right">
+                        <input id="remember-me" type="checkbox" name="check">
+                        <label for="remember-me">Remember Me</label>
+                      </div>
+                    </div>
+                    <div class="utf_row_form">
+                      <input type="submit" class="button border margin-top-5" name="login" value="Login" />
+                    </div>
+                    <div class="utf-login_with my-3">
+                      <span class="txt">Or Login in With</span>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <a href="javascript:void(0);" class="social_bt facebook_btn mb-0"><i class="fa fa-facebook"></i>
+                          Facebook</a>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <a href="javascript:void(0);" class="social_bt google_btn mb-0"><i class="fa fa-google"></i>
+                          Google</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab_content" id="tab2" style="display:none;">
+                  <form method="post" class="register">
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="username2">
+                        <input type="text" class="input-text" name="username" id="username2" value=""
+                          placeholder="Username" />
+                      </label>
+                    </p>
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="email2">
+                        <input type="text" class="input-text" name="email" id="email2" value="" placeholder="Email" />
+                      </label>
+                    </p>
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="password1">
+                        <input class="input-text" type="password" name="password1" id="password1"
+                          placeholder="Password" />
+                      </label>
+                    </p>
+                    <p class="utf_row_form utf_form_wide_block">
+                      <label for="password2">
+                        <input class="input-text" type="password" name="password2" id="password2"
+                          placeholder="Confirm Password" />
+                      </label>
+                    </p>
+                    <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
+                  </form>
+                </div>Free Wifi
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="clearfix"></div>
+    <div class="container">
+      <div class="row utf_sticky_main_wrapper" style="display: flex; justify-content: center;">
+        <div class="col-lg-8 col-md-8">
+          <div id="titlebar" class="utf_listing_titlebar">
+            <div class="utf_listing_titlebar_title">
+              <h3>내 예약</h3>
+              <p><span>예약번호 : </span><span th:text="${PP_reservation.res_num}"></span></p>
+              <p><span>예약숙소번호 : </span><span th:text="${PP_reservation.suk_num}"></span></p>
+              <p><span>숙소이름 : </span><span th:text="${PP_sukso.suk_name}"></span></p>
+              <p><span>관리자이름 : </span><span th:text="${PP_member.mem_nickname}"></span></p>
+              <p><span>관리자가 남긴 메시지 : </span><span th:text="${PP_suk_spec.suk_notice}"></span></p>
+              <ul class="utf_listing_features checkboxes margin-top-0">
+                <li>침대수 : <span th:text="${PP_suk_spec.suk_bed}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>침실수 : <span th:text="${PP_suk_spec.suk_restroom}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>주차장 : <span th:text="${PP_suk_spec.suk_parking}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>주방 : <span th:text="${PP_suk_spec.suk_kitchin}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>야외 바바큐 : <span th:text="${PP_suk_spec.suk_bbq}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>cctv : <span th:text="${PP_suk_spec.suk_cctv}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>애완동물 : <span th:text="${PP_suk_spec.suk_pet}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>층수 : <span th:text="${PP_suk_spec.suk_floor}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>엘레베이터 : <span th:text="${PP_suk_spec.suk_elev}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>와이파이 : <span th:text="${PP_suk_spec.suk_wifi}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+                <li>세탁시설 : <span th:text="${PP_suk_spec.suk_laundary}"
+                    th:if="${PP_suk_spec.suk_bed} != null else 'N/A'"></span></li>
+              </ul>
+              <ul class="listing_item_social">
+                <li><a href="#">호스트와의 채팅</a></li>
+                <li><a href="#">상세정보</a></li>
+                <li><a href="#">예약수정</a></li>
+                <li><a href="#">예약취소</a></li>
+                <li><a href="#">리뷰하기</a></li>
+                <li><a href="#">신고하기</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="utf_listing_location" class="utf_listing_section">
+            <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">Location</h3>
+            <div id="utf_single_listing_map_block">
+              <div id="utf_single_listingmap" data-latitude="36.778259" data-longitude="-119.417931"
+                data-map-icon="im im-icon-Hamburger"></div>
+              <a href="#" id="utf_street_view_btn">Street View</a>
+            </div>
+          </div>
+          <div id="utf_listing_reviews" class="utf_listing_section">
+            <h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">과거내역</h3>
+            <div class="clearfix"></div>
+            <div class="comments utf_listing_reviews">
+              <table>
+                <thead>
+                  <tr>
+                    <th>날짜</th>
+                    <th>숙소이름</th>
+                    <th>금액</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="list:${list}">
+                    <td><span th:text="${PP_reservation.res_resdate}"></span><span th:text="${PP_reservation.res_outdate}"></span></td>
+                    <td><a th:text="${PP_sukso.suk_name}"></a></td>
+                    <td><p th:text="${PP_reservation.res_price}"></p></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script src="scripts/jquery-3.4.1.min.js"></script>
+  <script src="scripts/chosen.min.js"></script>
+  <script src="scripts/slick.min.js"></script>
+  <script src="scripts/rangeslider.min.js"></script>
+  <script src="scripts/magnific-popup.min.js"></script>
+  <script src="scripts/jquery-ui.min.js"></script>
+  <script src="scripts/mmenu.js"></script>
+  <script src="scripts/tooltips.min.js"></script>
+  <script src="scripts/color_switcher.js"></script>
+  <script src="scripts/jquery_custom.js"></script>
+  <!-- Maps -->
+  <script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+  <script src="scripts/infobox.min.js"></script>
+  <script src="scripts/markerclusterer.js"></script>
+  <script src="scripts/maps.js"></script>
+  <script src="scripts/quantityButtons.js"></script>
+  <script src="scripts/moment.min.js"></script>
+  <script src="scripts/daterangepicker.js"></script>
+  <script>
+    $(function () {
+      $('#date-picker').daterangepicker({
+        "opens": "left",
+        singleDatePicker: true,
+        isInvalidDate: function (date) {
+          var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
+          var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
+          return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+        }
+      });
+    });
+
+    $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
+      $('.daterangepicker').addClass('calendar-animated');
+    });
+    $('#date-picker').on('show.daterangepicker', function (ev, picker) {
+      $('.daterangepicker').addClass('calendar-visible');
+      $('.daterangepicker').removeClass('calendar-hidden');
+    });
+    $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
+      $('.daterangepicker').removeClass('calendar-visible');
+      $('.daterangepicker').addClass('calendar-hidden');
+    });
+
+    function close_panel_dropdown() {
+      $('.panel-dropdown').removeClass("active");
+      $('.fs-inner-container.content').removeClass("faded-out");
+    }
+    $('.panel-dropdown a').on('click', function (e) {
+      if ($(this).parent().is(".active")) {
+        close_panel_dropdown();
+      } else {
+        close_panel_dropdown();
+        $(this).parent().addClass('active');
+        $('.fs-inner-container.content').addClass("faded-out");
+      }
+      e.preventDefault();
+    });
+    $('.panel-buttons button').on('click', function (e) {
+      $('.panel-dropdown').removeClass('active');
+      $('.fs-inner-container.content').removeClass("faded-out");
+    });
+    var mouse_is_inside = false;
+    $('.panel-dropdown').hover(function () {
+      mouse_is_inside = true;
+    }, function () {
+      mouse_is_inside = false;
+    });
+    $("body").mouseup(function () {
+      if (!mouse_is_inside) close_panel_dropdown();
+    });
+  </script>
+</body>
+
+</html>

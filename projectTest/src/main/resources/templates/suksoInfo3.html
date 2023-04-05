@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta name="author" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: U-Listing Directory - Listing HTML Template ::</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="images/favicon.png">
+<!-- Style CSS -->
+<link rel="stylesheet" href="../css/stylesheet.css">
+<link rel="stylesheet" href="../css/mmenu.css">
+<link rel="stylesheet" href="../css/style.css" id="colors">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800"
+	rel="stylesheet" type="text/css">
+<script>
+function idcheck(){
+	window.open('../member/idcheck','win','top=100,left=500,width=400,height=400');
+}
+function nickname_check(){
+	window.open('../member/nickname_check','win','top=100,left=500,width=400,height=400');
+}
+function email_check(){
+	window.open('../member/email_check','win','top=100,left=500,width=400,height=400');
+}
+
+function pagingFormSubmit(currentPage) {
+	alert(123);
+	var form = document.getElementById('pagingForm');
+	var page = document.getElementById('page');
+	page.value = currentPage;
+	
+	form.submit();
+}
+
+function validation() {
+	let mem_id = $('#mem_id').val();
+	let mem_password = $('#mem_password').val();
+	let mem_nickname = $('#mem_nickname').val();
+	let mem_phone = $('#mem_phone').val();
+
+	if (mem_id.length < 3 || mem_id.length > 10) {
+		alert("ID는 3~10자로 입력하세요.");
+		return false;
+	}
+	if (mem_password.length < 3 || mem_password.length > 10) {
+		alert("비밀번호는 3~10자로 입력하세요.");
+		return false;
+	}
+	if ( mem_nickname == '') {
+		alert("이름을 입력하세요.");
+		return false;
+	}
+	if (mem_phone == '') {
+		alert("전화번호를 입력하세요.");
+		return false;
+	}
+
+	let mem_address1 = $('#mem_address1').val();
+	let mem_address2 = $('#mem_address2').val()
+
+	if (mem_address1 == '') {
+		alert("주소를 입력하세요.");
+		return false;
+	}
+		
+	document.getElementById('mem_address').value = mem_address1 + ' ' + mem_address2;
+
+	return true;
+	}
+function pagingFormSubmit(currentPage) {
+
+	var form = document.getElementById('pagingForm');
+	var page = document.getElementById('page');
+	page.value = currentPage;
+	form.submit();
+}
+
+	
+</script>
+<script>
+/* function check() {
+	let res_num = $('#res_num').val();
+/* 	let res_state= $('#res_state').val(); */
+
+	if (res_num==false) {
+		alert("숙소 이용 고객만 리뷰 작성이 가능합니다.");
+		return false;
+	}
+	
+/* 	if(res_state!=3){
+		alert("숙소 이용 완료 고객만 리뷰 작성이 가능합니다.");
+		return false;
+	}
+	 */
+	/* 
+	return true;
+  */
+</script>
+
+
+<style>
+	#ka_category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
+	#ka_category li {float:left;list-style: none;width:50px; border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
+	#ka_category li.on {background: #eee;}
+	#ka_category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
+	#ka_category li:last-child{margin-right:0;border-right:0;}
+	#ka_category li span {display: block;margin:0 auto 3px;width:27px;height: 28px;}
+	#ka_category li .category_bg {background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;}
+	#ka_category li .bank {background-position: -10px 0;}
+	#ka_category li .mart {background-position: -10px -36px;}
+	#ka_category li .pharmacy {background-position: -10px -72px;}
+	#ka_category li .oil {background-position: -10px -108px;}
+	#ka_category li .cafe {background-position: -10px -144px;}
+	#ka_category li .store {background-position: -10px -180px;}
+	#ka_category li.on .category_bg {background-position-x:-46px;}
+	.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+	.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+	.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+	.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+	.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
+	.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
+	.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+	.placeinfo .tel {color:#0f7833;}
+	.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
+</style>
+
+</head>
+<body>
+
+<!-- Preloader Start -->
+<div class="preloader">
+    <div class="utf-preloader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Wrapper -->
+<div id="main_wrapper">
+		<header id="header_part">
+			<div id="header">
+				<div class="container">
+					<div class="utf_left_side">
+						<div id="logo">
+							<a th:href="@{/}">PickPick</a>
+						</div>
+						<div class="mmenu-trigger">
+							<button class="hamburger utfbutton_collapse" type="button">
+								<span class="utf_inner_button_box"> <span
+									class="utf_inner_section"></span>
+								</span>
+							</button>
+						</div>
+						<nav id="navigation" class="style_one">
+							<ul id="responsive">
+								<li><a href="#">Home</a>
+									<ul>
+										<li><a href="index_1.html">Home Version 1</a></li>
+										<li><a href="index_2.html">Home Version 2</a></li>
+										<li><a href="index_3.html">Home Version 3</a></li>
+										<li><a href="index_4.html">Home Version 4</a></li>
+										<li><a href="index_5.html">Home Version 5</a></li>
+										<li><a href="index_6.html">Home Version 6</a></li>
+										<li><a href="index_7.html">Home Version 7</a></li>
+									</ul></li>
+								<li><a class="current" href="#">Listings</a>
+									<ul>
+										<li><a href="#">List Layout</a>
+											<ul>
+												<li><a href="listings_list_with_sidebar.html">Listing
+														List Sidebar</a></li>
+												<li><a href="listings_list_full_width.html">Listing
+														List Full Width</a></li>
+											</ul></li>
+										<li><a href="#">Grid Layout</a>
+											<ul>
+												<li><a href="listings_grid_with_sidebar.html">Listing
+														Grid Sidebar</a></li>
+												<li><a href="listings_two_column_map_grid.html">Listing
+														Two Column Grid</a></li>
+												<li><a href="listings_grid_full_width.html">Listing
+														Grid Full Width</a></li>
+											</ul></li>
+										<li><a href="#">Half Listing Map</a>
+											<ul>
+												<li><a href="listings_half_screen_map_list.html">Listing
+														Half List</a></li>
+												<li><a href="listings_half_screen_map_grid.html">Listing
+														Half Grid</a></li>
+											</ul></li>
+										<li><a class="active" href="#">Listing Details</a>
+											<ul>
+												<li><a href="listings_single_page_1.html">Single
+														Listing Version 1</a></li>
+												<li><a href="listings_single_page_2.html">Single
+														Listing Version 2</a></li>
+												<li><a class="active"
+													href="listings_single_page_3.html">Single Listing
+														Version 3</a></li>
+												<li><a href="listings_single_page_4.html">Single
+														Listing Version 4</a></li>
+												<li><a href="listings_single_page_5.html">Single
+														Listing Version 5</a></li>
+											</ul></li>
+									</ul></li>
+								<li><a href="#">User Panel</a>
+									<ul>
+										<li><a href="dashboard.html">Dashboard</a></li>
+										<li><a href="dashboard_add_listing.html">Add Listing</a></li>
+										<li><a href="dashboard_my_listing.html">My Listings</a></li>
+										<li><a href="dashboard_bookings.html">Bookings</a></li>
+										<li><a href="dashboard_messages.html">Messages</a></li>
+										<li><a href="dashboard_wallet.html">Wallet</a></li>
+										<li><a href="dashboard_visitor_review.html">Reviews</a></li>
+										<li><a href="dashboard_bookmark.html">Bookmark</a></li>
+										<li><a href="dashboard_my_profile.html">My Profile</a></li>
+										<li><a href="dashboard_change_password.html">Change
+												Password</a></li>
+										<li><a href="dashboard_invoice.html">Invoice</a></li>
+									</ul></li>
+								<li><a href="#">Blog</a>
+									<ul>
+										<li><a href="blog_page.html">Blog Grid</a></li>
+										<li><a href="blog_page_left_sidebar.html">Blog Left
+												Sidebar</a></li>
+										<li><a href="blog_page_right_sidebar.html">Blog Right
+												Sidebar</a></li>
+										<li><a href="blog_detail_left_sidebar.html">Blog
+												Detail Leftside</a></li>
+										<li><a href="blog_detail_right_sidebar.html">Blog
+												Detail Rightside</a></li>
+									</ul></li>
+								<li><a href="#">Pages</a>
+									<ul>
+										<li><a href="page_about.html">About Us</a></li>
+										<li><a href="#">Categorie Type</a>
+											<ul>
+												<li><a href="page_categorie_one.html">Categorie One</a></li>
+												<li><a href="page_categorie_two.html">Categorie Two</a></li>
+											</ul></li>
+										<li><a href="add_listing.html">Add Listing</a></li>
+										<li><a href="listing_booking.html">Booking Listing</a></li>
+										<li><a href="page_pricing.html">Pricing Plan</a></li>
+										<li><a href="wishlist_listings.html">Wishlist Page</a></li>
+										<li><a href="page_filtering_style.html">Filtering
+												Style</a></li>
+										<li><a href="typography.html">Typography</a></li>
+										<li><a href="page_element.html">Page Element</a></li>
+										<li><a href="page_faqs.html">Page Faq</a></li>
+										<li><a href="#">Icons</a>
+											<ul>
+												<li><a href="page_icons_one.html">Icon-Mind Icon</a></li>
+												<li><a href="page_icons_two.html">Simple Line Icon</a></li>
+												<li><a href="page_icons_three.html">Font Awesome
+														Icon</a></li>
+											</ul></li>
+										<li><a href="page_not_found.html">Page Error 404</a></li>
+										<li><a href="page_coming_soon.html">Coming Soon</a></li>
+										<li><a href="contact.html">Contact</a></li>
+									</ul></li>
+							</ul>
+						</nav>
+						<div class="clearfix"></div>
+					</div>
+					<div class="utf_right_side">
+						<div class="header_widget">
+
+							<!-- sign in -->
+							<a sec:authorize="not isAuthenticated()"
+								href="#dialog_signin_part"
+								class="button border sign-in popup-with-zoom-anim"> <i
+								class="fa fa-sign-in"></i> Sign In
+							</a>
+
+							<!-- 알람 로고 -->
+							<!-- <a href="dashboard_add_listing.html" class="button border with-icon">
+                         <i class="fa-solid fa-bell"></i>
+                       </a> -->
+
+							<!-- My page-->
+							<!-- <a href="dashboard_add_listing.html" class="button border with-icon">
+                        <i class="sl sl-icon-user"></i> 
+                        My Page
+                      </a> -->
+
+							<div class="dashboard_header_button_item has-noti js-item-menu">
+								<i class="sl sl-icon-bell"></i>
+								<div class="dashboard_notifi_dropdown js-dropdown">
+									<div class="dashboard_notifi_title">
+										<p>You Have 2 Notifications</p>
+									</div>
+									<div class="dashboard_notifi_item">
+										<div class="bg-c1 red">
+											<i class="fa fa-check"></i>
+										</div>
+										<div class="content">
+											<p>
+												Your Listing <b>Burger House (MG Road)</b> Has Been
+												Approved!
+											</p>
+											<span class="date">2 hours ago</span>
+										</div>
+									</div>
+									<div class="dashboard_notifi_item">
+										<div class="bg-c1 green">
+											<i class="fa fa-envelope"></i>
+										</div>
+										<div class="content">
+											<p>You Have 7 Unread Messages</p>
+											<span class="date">5 hours ago</span>
+										</div>
+									</div>
+									<div class="dashboard_notify_bottom text-center pad-tb-20">
+										<a href="#">View All Notification</a>
+									</div>
+								</div>
+							</div>
+							<div class="utf_user_menu" sec:authorize="isAuthenticated()">
+								<div class="utf_user_name">
+									<span><img src="../images/dashboard-avatar.jpg" alt=""></span>
+								</div>
+								<ul>
+									<li><a href="dashboard.html"><i
+											class="sl sl-icon-layers"></i> Dashboard</a></li>
+									<li><a href="dashboard_my_profile.html"><i
+											class="sl sl-icon-user"></i> My Profile</a></li>
+									<li><a href="dashboard_my_listing.html"><i
+											class="sl sl-icon-list"></i> My Listing</a></li>
+									<li><a href="dashboard_messages.html"><i
+											class="sl sl-icon-envelope-open"></i> Messages</a></li>
+									<li><a href="dashboard_bookings.html"><i
+											class="sl sl-icon-docs"></i> Booking</a></li>
+									<li><a th:href="@{/member/logout}"><i
+											class="sl sl-icon-power"></i> Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+						<div class="small_dialog_header">
+							<h3>Sign In</h3>
+						</div>
+						<div class="utf_signin_form style_one">
+							<ul class="utf_tabs_nav">
+								<li class=""><a href="#tab1">Log In</a></li>
+								<li><a href="#tab2">Register</a></li>
+							</ul>
+
+							<div class="tab_container alt">
+								<div class="tab_content" id="tab1" style="display: none;">
+									<form method="post" class="login" th:action="@{/member/login}"
+										id="loginForm">
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="username"> <input type="text"
+												class="input-text" name="mem_id" value=""
+												placeholder="Username" />
+											</label>
+										</p>
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="password"> <input class="input-text"
+												type="password" name="mem_password" placeholder="Password" />
+											</label>
+										</p>
+										<div class="utf_row_form utf_form_wide_block form_forgot_part">
+											<span class="lost_password fl_left"> <a
+												href="javascript:void(0);">Forgot Password?</a>
+											</span>
+											<div class="checkboxes fl_right">
+												<input id="remember-me" type="checkbox" name="check">
+												<label for="remember-me">Remember Me</label>
+											</div>
+										</div>
+										<div class="utf_row_form">
+											<input type="submit" class="button border margin-top-5"
+												name="login" value="Login" />
+										</div>
+										<div class="utf-login_with my-3">
+											<span class="txt">Or Login in With</span>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-6">
+												<a href="javascript:void(0);"
+													class="social_bt facebook_btn mb-0"><i
+													class="fa fa-facebook"></i> Facebook</a>
+											</div>
+											<div class="col-md-6 col-6">
+												<a href="javascript:void(0);"
+													class="social_bt google_btn mb-0"><i
+													class="fa fa-google"></i> Google</a>
+											</div>
+										</div>
+									</form>
+								</div>
+
+
+
+
+
+								<div class="tab_content" id="tab2" style="display: none;">
+									<form method="post" class="register"
+										th:action="@{/member/join}" onsubmit="return validation();">
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="ID"> <input type="text"
+												class="input-text" name="mem_id" id="mem_id"
+												readonly="readonly" placeholder="ID중복확인 이용 ↓" /> <input
+												type="button" value="ID중복확인" onclick="idcheck()">
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="password1"> <input class="input-text"
+												type="password" name="mem_password" id="mem_password"
+												placeholder="Password" />
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="email2"> <input type="text"
+												class="input-text" name="mem_email" id="mem_email"
+												placeholder="Email" readonly="readonly" /> <input
+												type="button" value="이메일 중복확인" onclick="email_check()">
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="nickname"> <input type="text"
+												class="input-text" name="mem_nickname" id="mem_nickname"
+												value="" placeholder="닉네임 중복확인 이용 ↓" readonly="readonly" />
+												<input type="button" value="닉네임 중복확인"
+												onclick="nickname_check()">
+											</label>
+										</p>
+
+										<!-- 전화번호, 주소, 성별, role -->
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="phoneNumber"> <input type="text"
+												class="input-text" name="mem_phone" id="mem_phone" value=""
+												placeholder="전화번호" />
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="address"> <input type="text"
+												class="input-text" name="mem_address" id="mem_address"
+												value="" placeholder="주소" />
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="sex"> <select name="mem_gender">
+													<option value="">GENDER</option>
+													<option value='MALE' th:selected="${mem_gender == 'MALE'}">MALE♂</option>
+													<option value='FEMALE'
+														th:selected="${mem_gender == 'FEMALE'}">FEMALE♀</option>
+
+											</select>
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="mem_role"> <select name="mem_role"
+												id="role">
+													<option value="">HOST or USER</option>
+													<option value="ROLE_HOST"
+														th:selected="${mem_role == 'ROLE_HOST'}">HOST</option>
+													<option value="ROLE_USER"
+														th:selected="${mem_role == 'ROLE_USER'}">USER</option>
+											</select>
+											</label>
+										</p>
+
+										<input type="submit" class="button border fw margin-top-10"
+											name="register" value="Register" />
+									</form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="clearfix"></div>
+		<div id="utf_listing_gallery_part" class="utf_listing_section">
+			<div class="utf_listing_slider utf_gallery_container margin-bottom-0">
+				<a th:href="@{/sukso/download(num=${sukso.suk_num})}" th:data-background-image="@{/sukso/download(num=${sukso.suk_num})}" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+			</div>
+		</div>
+  <div class="container">
+			<div class="row utf_sticky_main_wrapper">
+				<div class="col-lg-8 col-md-8">
+					<div id="titlebar" class="utf_listing_titlebar">
+						<div class="utf_listing_titlebar_title">
+							<h2>
+								<span class="listing-tag" th:text="${sukso.suk_name}">Apartment</span>
+							</h2>
+							<span> <a href="#utf_listing_location"
+								class="listing-address"> <i class="sl sl-icon-location"></i>
+									<b th:text="${sukso.suk_address}"></b>
+							</a>
+							</span> <span class="call_now"><i class="sl sl-icon-phone"></i> <b
+								th:text="${sukso.suk_name}"></b></span>
+							<div class="utf_star_rating_section" data-rating="4.5">
+								<div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+							</div>
+							<ul class="listing_item_social">
+								<li><a href="#"><i class="fa fa-bookmark"></i> Bookmark</a></li>
+								<li><a href="#utf_add_comment"><i class="fa fa-star"></i>
+										Add Review</a></li>
+								<li><a href="#"><i class="fa fa-flag"></i> Featured</a></li>
+								<li><a href="#"><i class="fa fa-share"></i> Share</a></li>
+								<li><a href="#" class="now_open">Open Now</a></li>
+							</ul>
+			<div class="utf_room_detail">
+			<ul>
+				<li>3 Rooms</li>
+				<li>3 Bed Room</li>
+				<li>4 Bed</li>
+				<li>3 Bath Room</li>
+			</ul>
+		  </div>
+          </div>
+        </div>
+        <div id="utf_listing_overview" class="utf_listing_section">
+          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">게스트분들께 드리는말</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam.</p>
+        </div>
+        
+        <div id="utf_listing_amenities" class="utf_listing_section">
+          <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Features</h3>
+          <ul class="utf_listing_features checkboxes margin-top-0">
+            <li>Air Conditioned</li>
+            <li>Swimming Pool</li>
+            <li>Room Service</li>
+            <li>Luxury Bedding</li>
+            <li>Free Wifi</li>
+            <li>Bath Towel</li>
+			      <li>Wireless Internet</li>
+            <li>Free Parking on premises</li>
+            <li>Free Parking on Street</li>
+            <li>Live Music</li>            
+            <li>Indoor Pool</li>            
+          </ul>
+        </div>
+		
+        
+       	<div id="utf_listing_location" class="utf_listing_section">
+						<h3
+							class="utf_listing_headline_part margin-top-60 margin-bottom-40">Location</h3>
+
+						<div id="utf_single_listing_map_block">
+		<body onload="ka_execDaumPostcode()">						
+<input type="hidden"  id="suk_address" th:value="${sukso.suk_address}">
+ <input type="hidden" id="x" name="x">				
+<div id="map" style="position:relative;overflow:hidden;">
+
+    <input type="hidden" id="y" name="y">
+<ul id="ka_category">
+        <li id="BK9" data-order="0"> 
+            <span class="category_bg bank"></span>
+            은행
+        </li>       
+        <li id="MT1" data-order="1"> 
+            <span class="category_bg mart"></span>
+            마트
+        </li>  
+        <li id="PM9" data-order="2"> 
+            <span class="category_bg pharmacy"></span>
+            약국
+        </li>  
+        <li id="OL7" data-order="3"> 
+            <span class="category_bg oil"></span>
+            주유소
+        </li>  
+        <li id="CE7" data-order="4"> 
+            <span class="category_bg cafe"></span>
+            카페
+        </li>  
+        <li id="CS2" data-order="5"> 
+            <span class="category_bg store"></span>
+            편의점
+        </li>              
+    </ul>
+
+   </div>
+   </body>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16f9cd8afa5170203e0604da861a571c&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
+contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
+markers = [], // 마커를 담을 배열입니다
+currCategory = '';
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+addrInput = document.getElementById('suk_address'); // 주소를 입력받을 hidden input
+
+//주소-좌표 변환 객체를 생성
+var geocoder = new daum.maps.services.Geocoder();
+
+//초기 지도 중심 좌표
+var initLatLng = new daum.maps.LatLng(37.537187, 127.005476);
+
+//지도를 미리 생성
+var map = new daum.maps.Map(mapContainer, {
+center: initLatLng,
+level: 5
+});
+
+//마커를 생성하고 지도에 추가
+var marker = new daum.maps.Marker({
+position: initLatLng,
+map: map
+});
+var ps = new kakao.maps.services.Places(map); 
+
+//지도에 idle 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'idle', searchPlaces);
+
+//커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다 
+contentNode.className = 'placeinfo_wrap';
+
+//커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
+//지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다 
+addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
+
+//커스텀 오버레이 컨텐츠를 설정합니다
+placeOverlay.setContent(contentNode);  
+
+//각 카테고리에 클릭 이벤트를 등록합니다
+addCategoryClickEvent();
+
+//엘리먼트에 이벤트 핸들러를 등록하는 함수입니다
+function addEventHandle(target, type, callback) {
+ if (target.addEventListener) {
+     target.addEventListener(type, callback);
+ } else {
+     target.attachEvent('on' + type, callback);
+ }
+}
+
+//카테고리 검색을 요청하는 함수입니다
+function searchPlaces() {
+ if (!currCategory) {
+     return;
+ }
+ 
+ // 커스텀 오버레이를 숨깁니다 
+ placeOverlay.setMap(null);
+
+ // 지도에 표시되고 있는 마커를 제거합니다
+ removeMarker();
+ 
+ ps.categorySearch(currCategory, placesSearchCB, {useMapBounds:true}); 
+}
+
+//장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+ if (status === kakao.maps.services.Status.OK) {
+
+     // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
+     displayPlaces(data);
+ } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+     // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+
+ } else if (status === kakao.maps.services.Status.ERROR) {
+     // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+     
+ }
+}
+
+//지도에 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+ // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
+ // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
+ var order = document.getElementById(currCategory).getAttribute('data-order');
+
+ 
+
+ for ( var i=0; i<places.length; i++ ) {
+
+         // 마커를 생성하고 지도에 표시합니다
+         var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
+
+         // 마커와 검색결과 항목을 클릭 했을 때
+         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+         (function(marker, place) {
+             kakao.maps.event.addListener(marker, 'click', function() {
+                 displayPlaceInfo(place);
+             });
+         })(marker, places[i]);
+ }
+}
+
+//마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, order) {
+ var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+     imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
+     imgOptions =  {
+         spriteSize : new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
+         spriteOrigin : new kakao.maps.Point(46, (order*36)), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+         offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+     },
+     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+         marker = new kakao.maps.Marker({
+         position: position, // 마커의 위치
+         image: markerImage 
+     });
+
+ marker.setMap(map); // 지도 위에 마커를 표출합니다
+ markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+ return marker;
+}
+
+//지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+ for ( var i = 0; i < markers.length; i++ ) {
+     markers[i].setMap(null);
+ }   
+ markers = [];
+}
+
+//클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+function displayPlaceInfo (place) {
+ var content = '<div class="placeinfo">' +
+                 '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
+
+ if (place.road_address_name) {
+     content += '    <span title="' + place.road_address_name + '">' + place.road_address_name + '</span>' +
+                 '  <span class="jibun" title="' + place.address_name + '">(지번 : ' + place.address_name + ')</span>';
+ }  else {
+     content += '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+ }                
+
+ content += '    <span class="tel">' + place.phone + '</span>' + 
+             '</div>' + 
+             '<div class="after"></div>';
+
+ contentNode.innerHTML = content;
+ placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+ placeOverlay.setMap(map);  
+}
+
+
+//각 카테고리에 클릭 이벤트를 등록합니다
+function addCategoryClickEvent() {
+ var category = document.getElementById('ka_category'),
+     children = category.children;
+
+ for (var i=0; i<children.length; i++) {
+     children[i].onclick = onClickCategory;
+ }
+}
+
+//카테고리를 클릭했을 때 호출되는 함수입니다
+function onClickCategory() {
+ var id = this.id,
+     className = this.className;
+
+ placeOverlay.setMap(null);
+
+ if (className === 'on') {
+     currCategory = '';
+     changeCategoryClass();
+     removeMarker();
+ } else {
+     currCategory = id;
+     changeCategoryClass(this);
+     searchPlaces();
+ }
+}
+
+//클릭된 카테고리에만 클릭된 스타일을 적용하는 함수입니다
+function changeCategoryClass(el) {
+ var category = document.getElementById('ka_category'),
+     children = category.children,
+     i;
+
+ for ( i=0; i<children.length; i++ ) {
+     children[i].className = '';
+ }
+
+ if (el) {
+     el.className = 'on';
+ } 
+} 
+
+
+function ka_execDaumPostcode() {
+    // 현재 주소를 가져와서 좌표를 검색하기 위해
+    // 입력 받을 hidden input 필드를 생성하여 값 할당
+    var currentAddr = addrInput.value;
+    if (currentAddr === '') {
+        currentAddr = '서울특별시 강남구 테헤란로 152';
+    }
+
+    // 주소로 좌표를 검색
+    geocoder.addressSearch(currentAddr, function(results, status) {
+        if (status === daum.maps.services.Status.OK) {
+            // 검색 결과가 있으면 첫번째 결과를 사용
+            var result = results[0];
+            var coords = new daum.maps.LatLng(result.y, result.x);
+
+            // 지도를 해당 좌표로 이동
+            map.setCenter(coords);
+            marker.setPosition(coords);
+
+            // 주소와 좌표 값을 hidden input 필드에 업데이트
+            addrInput.value = result.address;
+            document.getElementById("x").value = result.x;
+            document.getElementById("y").value = result.y;
+
+            // 지도를 보여주기 위해 display 속성 변경
+            mapContainer.style.display = 'block';
+        } else {
+            alert('주소 검색 실패: ' + status);
+        }
+    });
+}
+	
+</script>						
+					</div>
+        <div id="utf_listing_reviews" class="utf_listing_section">
+          <h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">Reviews <span>(08)</span></h3>
+          <div class="clearfix"></div>
+		  <div class="reviews-container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div id="review_summary">
+						<strong>4.5</strong>
+						<em>Superb Reviews</em>
+						<small>Out of 15 Reviews</small>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="row">
+						<div class="col-lg-2 review_progres_title"><small><strong>Quality</strong></small></div>
+						<div class="col-lg-9">
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="col-lg-1 review_progres_title"><small><strong>77</strong></small></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-2 review_progres_title"><small><strong>Space</strong></small></div>
+						<div class="col-lg-9">
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="col-lg-1 review_progres_title"><small><strong>15</strong></small></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-2 review_progres_title"><small><strong>Price</strong></small></div>
+						<div class="col-lg-9">
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="col-lg-1 review_progres_title"><small><strong>18</strong></small></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-2 review_progres_title"><small><strong>Service</strong></small></div>
+						<div class="col-lg-9">
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="col-lg-1 review_progres_title"><small><strong>10</strong></small></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-2 review_progres_title"><small><strong>Location</strong></small></div>
+						<div class="col-lg-9">
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="col-lg-1 review_progres_title"><small><strong>05</strong></small></div>
+					</div>
+				</div>
+			</div>
+		  </div>
+		  
+		  <form id="pagingForm" method="get" th:action="@{/sukso/read}">
+          <div class="comments utf_listing_reviews"
+							th:each="review : ${review}">
+
+							<ul>
+								<li>
+
+									<div class="avatar">
+										<img th:src="@{/sukso/review/download(num=${review.rev_num})}"
+											 alt="" />
+									</div>
+									<div class="utf_comment_content">
+										<div class="utf_arrow_comment"></div>
+										<div class="utf_star_rating_section"
+											th:data-rating="${review.rev_star_clean}"></div>
+										<a href="#" class="rate-review">도움이 됬어요!<i
+											class="fa fa-thumbs-up"></i></a>
+										<div class="utf_by_comment">
+											<b th:text="${review.mem_id}"></b> <span class="date"><i
+												class="fa fa-clock-o"></i> <b th:text="${review.rev_date}"></b></span>
+										</div>
+										<p th:text="${review.rev_contents}"></p>
+									</div>
+								</li>
+							</ul>
+
+						</div>
+        <div class="clearfix"></div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="utf_pagination_container_part margin-top-30">
+									<nav class="pagination">
+										<ul>
+											<li><a
+												th:href="|javascript:pagingFormSubmit(${navi.currentPage - 1})|"><i
+													class="sl sl-icon-arrow-left"></i></a></li>
+
+											<li><span
+												th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+													<th:block th:if="${counter == navi.currentPage}">
+														<b>
+													</th:block> <a th:text="${counter}"
+													th:href="|javascript:pagingFormSubmit(${counter})|"></a> <th:block
+														th:if="${counter == navi.currentPage}">
+														</b>
+													</th:block>
+											</span></li>
+
+											<li><a
+												th:href="|javascript:pagingFormSubmit(${navi.currentPage + 1})|"><i
+													class="sl sl-icon-arrow-right"></i></a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<input type="hidden" name="page" id="page">
+							<input type="hidden" id=num name="num" th:value="${sukso.suk_num}">
+				        
+						</div>
+						<div class="clearfix"></div>
+					</div>
+</form>
+
+
+					<div id="utf_add_review" class="utf_add_review-box"
+						sec:authorize="isAuthenticated()">
+						<h3 class="utf_listing_headline_part margin-bottom-20">리뷰 작성</h3>
+						<form id="utf_add_comment" class="utf_add_comment"
+							th:action="@{/sukso/writeReview}" method="post"
+							enctype="multipart/form-data" onsubmit="return check();">
+							<div class="row">
+
+								<input type="hidden" id=suk_num name="suk_num" th:value="${sukso.suk_num}">
+								<!-- <input type="hidden" id=res_num th:value="${res.res_num}"> -->
+								<!-- <input type="hidden" id=res_state th:value="${res_state}"> -->
+
+
+								<div class="col-md-6 col-sm-6 col-xs-12">
+
+									<div class="utf_leave_rating margin-bottom-30">
+										<input type="radio" name="rev_star_clean" id="rating-1"
+											value=5 /> <label for="rating-1" class="fa fa-star"></label>
+										<input type="radio" name="rev_star_clean" id="rating-2"
+											value=4 /> <label for="rating-2" class="fa fa-star"></label>
+										<input type="radio" name="rev_star_clean" id="rating-3"
+											value=3 /> <label for="rating-3" class="fa fa-star"></label>
+										<input type="radio" name="rev_star_clean" id="rating-4"
+											value=2 /> <label for="rating-4" class="fa fa-star"></label>
+										<input type="radio" name="rev_star_clean" id="rating-5"
+											value=1 /> <label for="rating-5" class="fa fa-star"></label>
+									</div>
+							
+
+
+								        
+             
+             <!--  <div class="utf_leave_rating margin-bottom-30" name="rev_star_access"> 
+                <input type="radio" name="rating" id="rating-1" value="1"/>
+                <label for="rating-1" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-2" value="2"/>
+                <label for="rating-2" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-3" value="3"/>
+                <label for="rating-3" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-4" value="4"/>
+                <label for="rating-4" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-5" value="5"/>
+                <label for="rating-5" class="fa fa-star"></label>
+              </div> -->
+            </div>
+            
+            <!--  
+            <div class="col-md-6 col-sm-6 col-xs-12">
+             
+              <div class="utf_leave_rating margin-bottom-30" name="rev_star_faci"> 
+                <input type="radio" name="rating" id="rating-1" value="1"/>
+                <label for="rating-1" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-2" value="2"/>
+                <label for="rating-2" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-3" value="3"/>
+                <label for="rating-3" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-4" value="4"/>
+                <label for="rating-4" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-5" value="5"/>
+                <label for="rating-5" class="fa fa-star"></label>
+              </div>
+            </div>
+            
+            
+            <div class="col-md-6 col-sm-6 col-xs-12">
+             
+              <div class="utf_leave_rating margin-bottom-30" name="rev_star_service"> 
+                <input type="radio" name="rating" id="rating-1" value="1"/>
+                <label for="rating-1" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-2" value="2"/>
+                <label for="rating-2" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-3" value="3"/>
+                <label for="rating-3" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-4" value="4"/>
+                <label for="rating-4" class="fa fa-star"></label>
+                <input type="radio" name="rating" id="rating-5" value="5"/>
+                <label for="rating-5" class="fa fa-star"></label>
+              </div>
+            </div>
+             -->
+
+								<div class="col-md-6 col-sm-6 col-xs-12"></div>
+								<div class="add-review-photos margin-bottom-30">
+
+									<div class="photoUpload">
+										<span>Upload Photo <i
+											class="sl sl-icon-arrow-up-circle"></i></span> <input type="file"
+											class="upload" name="upload" />
+									</div>
+								</div>
+							</div>
+
+
+							<fieldset>
+								<div>
+									<label>리뷰</label>
+									<textarea cols="40" placeholder="" rows="3" name="rev_contents"
+										id="rev_contents"></textarea>
+								</div>
+							</fieldset>
+							<div class="clearfix"></div>
+							<input type="submit" class="button" value="리뷰 등록">
+						</form>
+					</div>
+				</div>
+
+      
+      
+      
+      
+      
+      
+      
+      <!-- Sidebar -->
+      <form method="post" th:action="@{/book/insertRes}">
+      <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search" >
+      <div class="verified-badge with-tip margin-bottom-30"
+						data-tip-content="Listing has been verified and belongs business owner or manager.">
+						<i class="sl sl-icon-check"></i> Now Available
+					</div>
+        <div class="utf_box_widget booking_widget_box ">
+          <h3><i class="fa fa-calendar"></i> Booking 
+            <div class="price">
+              <span><a id="priceper" th:text="${sukso.suk_price1}"></a>원<small>인수당</small></span>
+              <input type="hidden" name="suk_price" th:value="${sukso.suk_price1}">
+            </div>
+         </h3>
+          
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12 select_date_box">
+              <input type="text" id="date-picker" placeholder="Select Date" readonly="readonly">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="hidden" name="res_resdate" id="res_resdate" value="">
+              <input type="hidden" name="res_outdate" id="res_outdate" value="">
+          </div>
+          <div class="row with-forms">
+  <div class="col-lg-12">
+    <div class="panel-dropdown">
+      <a href="#">투숙객 <span class="qtyTotal" id="res_pop">1</span></a>
+ 
+      <div class="panel-dropdown-content">
+        <div class="qtyButtons">
+          <div class="qtyTitle">투숙인원 수</div>
+          <input type="number" min="1" name="qtyInput"  value="1" id="qtyInput">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <select name="res_pet" class="utf_chosen_select_single">
+                <option label="Select Room">애완동물 동반</option>
+                 <option value=0 th:selected="${res_pet==0}">yes</option>
+                 <option value=1 th:selected="${res_pet==1}">no</option>
+           
+              </select>
+            </div>
+          </div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <select  name="res_parking" class="utf_chosen_select_single">
+                <option label="Select Room">주차장 사용여부</option>
+               <option value=0 th:selected="${res_parking==0}">사용</option>
+                    <option value=1 th:selected="${res_parking==1}">사용안함</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <textarea name="res_message" id="" cols="30" rows="10" placeholder="host에게 전할 말" style="height: 100px;"></textarea>
+            </div>
+          </div>
+              <input type="hidden" name="suk_num" th:value="${sukso.suk_num}">
+              <div sec:authorize="isAuthenticated()">
+          <input type="submit" class="utf_progress_button button fullwidth_block margin-top-5" value="예약하기"></input>
+               </div>
+                <div sec:authorize=" not isAuthenticated()">
+       <a>로그인 시 예약 가능</a>
+               </div>
+          <div class="clearfix"></div>
+            
+          
+        </div>
+        </form>
+
+        <div class="utf_box_widget opening-hours review-avg-wrapper margin-top-35">
+          <h3><i class="sl sl-icon-star"></i>  Rating Average </h3>
+          <div class="box-inner">
+			  <div class="rating-avg-wrapper text-theme clearfix">
+				<div class="rating-avg">4.8</div>
+				<div class="rating-after">
+				  <div class="rating-mode">/5 Average</div>
+				  
+				</div>
+			  </div>
+			  <div class="ratings-avg-wrapper">
+				<div class="ratings-avg-item">
+				  <div class="rating-label">Quality</div>
+				  <div class="rating-value text-theme">5.0</div>
+				</div>
+				<div class="ratings-avg-item">
+				  <div class="rating-label">Location</div>
+				  <div class="rating-value text-theme">4.5</div>
+				</div>
+				<div class="ratings-avg-item">
+				  <div class="rating-label">Space</div>
+				  <div class="rating-value text-theme">3.5</div>
+				</div>
+				<div class="ratings-avg-item">
+				  <div class="rating-label">Service</div>
+				  <div class="rating-value text-theme">4.0</div>
+				</div>
+				<div class="ratings-avg-item">
+				  <div class="rating-label">Price</div>
+				  <div class="rating-value text-theme">5.0</div>
+				</div>
+			  </div>
+			</div>
+        </div>
+
+        <div class="utf_box_widget margin-top-35">
+          <h3><i class="sl sl-icon-phone"></i> Host Info</h3>
+          <ul class="utf_listing_detail_sidebar">
+            <li th:text="${sukso.suk_name}"><i class="fa-regular fa-user"></i> 김을동</li>
+            <li th:text="${sukso.suk_address}"><i class="fa-regular fa-address-book"></i> 12345 Little Lonsdale St, Melbourne</li>
+            <li th:text="${sukso.suk_name}"><i class="sl sl-icon-phone"></i>+(012) 1123-254-456</li>
+            <li th:text="${sukso.suk_name}"><i class="fa fa-envelope-o"></i> <a href="mailto:info@example.com">info@example.com</a></li>
+          </ul>		  
+        </div>
+      
+		
+		</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="bottom_backto_top"><a href="#"></a></div>
+</div>
+
+<!-- Scripts --> 
+<script src="../scripts/jquery-3.4.1.min.js"></script>
+	<script src="../scripts/chosen.min.js"></script>
+	<script src="../scripts/slick.min.js"></script>
+	<script src="../scripts/rangeslider.min.js"></script>
+	<script src="../scripts/magnific-popup.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/mmenu.js"></script>
+	<script src="../scripts/tooltips.min.js"></script>
+	<script src="../scripts/color_switcher.js"></script>
+	<script src="../scripts/jquery_custom.js"></script>
+
+
+<script src="../scripts/infobox.min.js"></script> 
+<script src="../scripts/markerclusterer.js"></script> 
+<script src="../scripts/maps.js"></script>
+<link href="../css/datedropper.css" rel="stylesheet" type="text/css">
+<script src="../scripts/datedropper.js"></script> 
+<script src="../scripts/quantityButtons.js"></script>
+<script src="../scripts/moment.min.js"></script>
+<script src="../scripts/daterangepicker.js"></script>
+<script src="https://kit.fontawesome.com/eb509e8419.js" crossorigin="anonymous"></script>
+<script>
+$(function() {
+	$('#date-picker').daterangepicker({
+		"opens": "left",
+		// singleDatePicker: true,
+		isInvalidDate: function(date) {
+			var disabled_start = moment('09/02/2018', 'DD/MM/YYYY');
+			var disabled_end = moment('06/09/2018', 'DD/MM/YYYY');
+		return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+		}
+	}, function(start, end, label) {
+	    $('#res_resdate').val(start.format('YYYY-MM-DD'));
+	    $('#res_outdate').val(end.format('YYYY-MM-DD'));
+	  });
+});
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+</script>
+</body>
+</html>

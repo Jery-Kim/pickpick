@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function validation() {
+	let mem_password = document.getElementById('mem_password');
+	let mem_password2 = document.getElementById('mem_password2');
+
+
+	
+	if (mem_password.value != mem_password2.value) {
+		alert("비밀번호를 정확하게 입력하세요.");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<header>
+	<h1>[ 개인정보 삭제 ]</h1>
+	</header>
+
+
+	<section>
+	<form th:action="@{/member/quit}"  method="post" onsubmit="return validation();">
+	<table>
+		<tr>
+			<th>비밀번호</th>
+			<td><input type="password" name="mem_password" id="mem_password" placeholder="비밀번호 입력"><br>
+			<input type="password" id="mem_password2" placeholder="비밀번호 다시 입력"></td>
+		</tr>
+	</table>
+	<br>
+	
+	<input type="submit" value="삭제" />
+	<input type="reset" value="다시 쓰기" />
+	
+	</form>	
+	</section>
+</body>
+</html>

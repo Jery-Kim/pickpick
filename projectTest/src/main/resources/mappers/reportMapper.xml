@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.ReportDAO">
+
+<!-- 회원정보 저장 -->
+<insert id="insertReport" parameterType="report">
+  insert into PP_report (
+        rep_num
+		,mem_id
+		, rep_title
+		,rep_contents
+		<if test="rep_files_orz !=null and rep_files_saved !=null">
+		,rep_files_orz
+		,rep_files_saved
+		</if>
+	) 
+    values (
+        PP_report_seq.NEXTVAL
+		 , #{mem_id}
+		, #{rep_title}
+		, #{rep_contents}
+		<if test="rep_files_orz !=null and rep_files_saved !=null">
+		, #{rep_files_orz}
+		, #{rep_files_saved}	
+		</if>
+	)
+</insert>
+<select id="selectReportList" resultType="Report">
+	select 
+		*
+	from 
+		PP_report
+</select>
+
+<select id="readReply" parameterType="int" resultType="Report_Comment">
+select
+*
+From PP_rep_comment
+ where rep_num=#{rep_num}
+</select>
+
+<select id="read" parameterType="int" resultType="Report">
+	select 
+	*
+	from 
+		PP_report
+	where rep_num=#{rep_num}
+</select>
+
+
+
+<insert id="insertReply" parameterType="Report_Comment">
+insert into PP_Rep_Comment(
+rep_comment_num           
+,rep_num
+,rep_comment_contents  
+,mem_id )
+ values (
+ PP_rep_comment_seq.NEXTVAL
+,#{rep_num}
+,#{rep_comment_contents}  
+,#{mem_id}
+ )
+</insert>
+<delete  id="deleteReply" parameterType="Report_Comment">
+delete PP_Rep_Comment
+where rep_comment_num=#{rep_comment_num} and mem_id=#{mem_id}
+</delete>
+
+
+
+</mapper>

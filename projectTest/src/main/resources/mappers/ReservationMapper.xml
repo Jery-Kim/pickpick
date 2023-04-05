@@ -1,0 +1,89 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.ReservationDAO">
+
+	<!-- 회원정보 저장 -->
+	<insert id="insertRes" parameterType="reservation">
+	
+		insert into PP_Reservation (
+		res_num
+		, mem_id
+		, suk_num
+		, res_resdate                     -- 예약한 시간
+        , res_outdate 
+        , res_pop 
+        , res_parking  
+        , res_pet 
+        , res_message 
+        , res_price
+		)
+		values (
+		PP_reservation_seq.nextval
+		, #{mem_id}
+		, #{suk_num}
+		, TO_DATE(#{res_resdate},'YYYY-MM-DD')       
+        , TO_DATE(#{res_outdate} ,'YYYY-MM-DD') 
+        , #{res_pop} 
+        , #{res_parking}  
+        , #{res_pet} 
+        , #{res_message} 
+        , #{res_price}
+	    
+		)
+	</insert>
+<update id="updateRes" parameterType="reservation">
+update PP_Reservation 
+           set
+		 res_resdate=TO_DATE(#{res_resdate},'YYYY-MM-DD')               
+        , res_outdate=TO_DATE(#{res_outdate} ,'YYYY-MM-DD') 
+        , res_pop= #{res_pop} 
+        , res_parking= #{res_parking} 
+        , res_pet= #{res_pet} 
+        , res_message= #{res_message} 
+        , res_price= #{res_price}
+where 
+suk_num=#{suk_num}
+</update>	
+	<delete id="deleteRes" parameterType="int">
+	delete pp_reservation where res_num=#{res_num}
+	
+	
+	</delete>
+	
+	
+	
+	
+	
+	
+<select id="checkbook" parameterType="String" resultType="bookSukso">
+select 
+r.res_num
+,r.mem_id
+,r.suk_num
+,r.res_resdate
+,r.res_outdate
+,r.res_pop
+,r.res_message
+,r.res_price
+,s.suk_name
+,s.suk_address
+,m.mem_nickname
+
+ from PP_reservation r, PP_sukso s, PP_member m where r.suk_num=s.suk_num and 
+ s.mem_id=m.mem_id and r.mem_id=#{mem_id} and r.res_state=0
+
+</select>
+
+<select id="findRes" parameterType="String" resultType="Reservation">
+select * from pp_reservation where mem_id=#{mem_id} and res_state=3
+
+
+</select>
+
+
+
+
+
+</mapper>

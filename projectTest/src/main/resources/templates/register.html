@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+
+<input type="text" id="ka_address" placeholder="주소" readonly>
+<input type="button" onclick="ka_execDaumPostcode()" value="주소 검색"><br>
+<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16f9cd8afa5170203e0604da861a571c&libraries=services"></script>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+
+    let x;
+    let y;
+    let xy;
+    let addr;
+
+    function ka_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                addr = data.address; // 최종 주소 변수
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("ka_address").value = addr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        let result = results[0]; //첫번째 결과의 값을 활용
+                        y = result.y;
+                        x = result.x;
+                        xy = {x, y};
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+            }
+            
+        }).open();
+    }
+
+    function aaa() {
+        // 여기다가 넣는 xy를 가지고 주어진 위치를 찍을 수 있도록 만들어 준다.
+        console.log("x={}와 y={}", x, y);
+        console.log("xy={}", xy);
+
+        let inputx = document.getElementById("x");
+        let inputy = document.getElementById("y");
+        let inputaddr = document.getElementById("address");
+
+        inputx.value = x;
+        inputy.value = y;
+        inputaddr.value = addr;
+    }
+	
+</script>
+
+<br>
+<input type="button" id="aaa" value="값을 가져올 수 있는가" onclick="aaa();">
+<p>아래를 히든으로 변경, form 형식으로 보낼 수 있음. </p>
+<p>아래 form은 설정되어지지 않은 상태임 </p>
+<form action="">
+    <input type="text" id="x" readonly>
+    <input type="text" id="y" readonly>
+    <input type="text" id="address" readonly>
+    <br>
+    <input type="submit" value="전송">
+</form>
+</body>
+</html>

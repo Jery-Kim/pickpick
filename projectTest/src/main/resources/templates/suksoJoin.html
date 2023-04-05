@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>[글쓰기]</title>
+
+</head>
+<body>
+	<header>
+		<h1>[숙소 등록]</h1>
+	</header>
+	<section>
+		<form id="writeForm" th:action="@{/sukso/join}" method="post"
+			enctype="multipart/form-data" onsubmit="return validation;">
+			<table>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" name="suk_name"></td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td><input type="text" name="suk_address"><br>
+				</tr>
+
+				<tr>
+					<th>위치</th>
+					<td><select name="suk_location">
+							<option value='서울특별시' th:selected="${suk_location == '서울특별시'}">서울특별시</option>
+							<option value='경기도' th:selected="${suk_location == '경기도'}">경기도</option>
+							<option value='강원도' th:selected="${suk_location == '강원도'}">강원도</option>
+							<option value='충청남도' th:selected="${suk_location == '충청남도'}">충청남도</option>
+							<option value='충청북도' th:selected="${suk_location == '충청북도'}">충청북도</option>
+							<option value='전라남도' th:selected="${suk_location == '전라남도'}">전라남도</option>
+							<option value='전라북도' th:selected="${suk_location == '전라북도'}">전라북도</option>
+							<option value='경상남도' th:selected="${suk_location == '경상남도'}">경상남도</option>
+							<option value='경상북도' th:selected="${suk_location == '경상북도'}">경상북도</option>
+							<option value='제주특별자치시' th:selected="${suk_location == '제주특별자치시'}">제주특별자치시</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th>주변환경</th>
+					<td><select name="suk_nearby">
+							<option value='바다' th:selected="${suk_nearby == '바다'}">바다</option>
+							<option value='산' th:selected="${suk_nearby == '산'}">산</option>
+							<option value='강' th:selected="${suk_nearby == '강'}">강</option>
+							<option value='도심' th:selected="${suk_nearby == '도심'}">도심</option>
+					    	<option value='하천' th:selected="${suk_nearby == '하천'}">하천</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td><input type="file" name="upload"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="write center"><input type="submit"
+						value="저장" /></td>
+				</tr>
+
+			</table>
+			<br>
+
+		</form>
+	</section>
+
+</body>
+</html>

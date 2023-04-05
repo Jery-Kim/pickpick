@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.MemberDAO">
+
+<!-- 회원정보 저장 -->
+<insert id="insertMember" parameterType="Member">
+  insert into PP_member (
+		mem_id
+		, mem_password
+		, mem_nickname
+		, mem_email
+		, mem_phone
+		, mem_gender
+		, mem_address
+		, mem_role
+	) 
+    values (
+		#{mem_id}
+		, #{mem_password}
+		, #{mem_nickname}
+		, #{mem_email}
+		, #{mem_phone}
+		, #{mem_gender}
+		, #{mem_address}
+		 , #{mem_role}
+	)
+</insert>
+<select id="select" parameterType="string" resultType="Member">
+select*from PP_member where mem_id=#{mem_id}
+</select>
+
+<select id="select_nickname" parameterType="string" resultType="Member">
+select*from PP_member where mem_nickname=#{mem_nickname}
+</select>
+<select id="select_email" parameterType="string" resultType="Member">
+select*from PP_member where mem_email=#{mem_email}
+</select>
+
+<update id="update" parameterType="Member">
+	update PP_member
+	set
+	mem_nickname = #{mem_nickname}
+	,mem_email = #{mem_email}
+	,mem_phone = #{mem_phone}
+	,mem_address = #{mem_address}
+	
+	<if test="mem_password != null and mem_password !=''">
+	,mem_password = #{mem_password}
+	</if>
+	where mem_id =#{mem_id}
+</update>
+
+<delete id ="delete" parameterType="member">
+delete PP_member where mem_id=#{mem_id}
+</delete>
+
+
+
+</mapper>

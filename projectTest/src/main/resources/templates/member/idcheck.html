@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" 
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>ID 중복확인</title>
+</head>
+<script>
+function inputID(){
+	opener.document.getElementById("mem_id").value=document.getElementById('mem_id').value;
+	this.close();
+}
+</script>
+
+<body>
+	<h2>[ ID 중복확인 ]</h2>
+
+	<form action="idcheck" method="post">
+		검색할 ID <input type="text" name="mem_id" id="mem_id" th:value="${searchID}"> 
+		<input type="submit" value="검색">
+	</form>
+<div th:if="${searchID != null}">
+	<div th:if="${result}" >
+		<p>이미 사용중인 아이디 입니다.</p>
+	</div>
+
+	<div th:if="${not result}">
+		<p>사용 가능한 아이디 입니다.</p>
+		<p><input type="button" value="ID사용하기" onclick="inputID()"></p>
+	</div>
+</div>
+
+</body>
+</html>

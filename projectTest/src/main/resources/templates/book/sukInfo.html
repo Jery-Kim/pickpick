@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta name="author" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: U-Listing Directory - Listing HTML Template ::</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="images/favicon.png">
+<!-- Style CSS -->
+<link rel="stylesheet" href="../css/stylesheet.css">
+<link rel="stylesheet" href="../css/mmenu.css">
+<link rel="stylesheet" href="../css/style.css" id="colors">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800"
+	rel="stylesheet" type="text/css">
+
+	
+<script>
+/* function check() {
+	let res_num = $('#res_num').val();
+/* 	let res_state= $('#res_state').val(); */
+
+	if (res_num==false) {
+		alert("숙소 이용 고객만 리뷰 작성이 가능합니다.");
+		return false;
+	}
+	
+/* 	if(res_state!=3){
+		alert("숙소 이용 완료 고객만 리뷰 작성이 가능합니다.");
+		return false;
+	}
+	 */
+	
+	return true;
+ */
+</script>
+
+
+<style>
+
+</style>
+
+</head>
+<body>
+
+<!-- Preloader Start -->
+<div class="preloader">
+    <div class="utf-preloader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Wrapper -->
+<div id="main_wrapper">
+		<header id="header_part">
+			<div id="header">
+				<div class="container">
+					<div class="utf_left_side">
+						<div id="logo">
+							<a th:href="@{/}">PickPick</a>
+						</div>
+						
+				
+					</div>
+					<div class="utf_right_side">
+						<div class="header_widget">
+
+					
+			
+      </div>
+    </div>
+  </header>
+  <div class="clearfix"></div>
+		<div id="utf_listing_gallery_part" class="utf_listing_section">
+			<div class="utf_listing_slider utf_gallery_container margin-bottom-0">
+				<a th:href="@{/sukso/download(num=${sukso.suk_num})}" th:data-background-image="@{/sukso/download(num=${sukso.suk_num})}" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+					<a href="../images/single_listing_img_02.jpg" data-background-image="images/single_listing_img_02.jpg" class="item utf_gallery"></a> 
+					<a href="../images/single_listing_img_03.jpg" data-background-image="images/single_listing_img_03.jpg" class="item utf_gallery"></a>
+			</div>
+		</div>
+		<form method="post" th:action="@{/book/updateRes}">
+      <div class="col-lg-10 col-md-10 margin-top-75 sidebar-search" >
+      <div class="verified-badge with-tip margin-bottom-30"
+						data-tip-content="Listing has been verified and belongs business owner or manager.">
+						<i class="sl sl-icon-check"></i> 예약 수정 가능
+					</div>
+        <div class="utf_box_widget booking_widget_box ">
+          <h3><i class="fa fa-calendar"></i> Booking 
+            <div class="price">
+              <span><a id="priceper" th:text="${sukso.suk_price1}"></a>원<small>인수당</small></span>
+              <input type="hidden" name="suk_price" th:value="${sukso.suk_price1}">
+            </div>
+         </h3>
+          
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12 select_date_box">
+              <input type="text" id="date-picker" placeholder="Select Date" readonly="readonly">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="hidden" name="res_resdate" id="res_resdate" value="">
+              <input type="hidden" name="res_outdate" id="res_outdate" value="">
+          </div>
+          <div class="row with-forms">
+  <div class="col-lg-12">
+    <div class="panel-dropdown">
+      <a href="#">투숙객 <span class="qtyTotal" id="res_pop">1</span></a>
+ 
+      <div class="panel-dropdown-content">
+        <div class="qtyButtons">
+          <div class="qtyTitle">투숙인원 수</div>
+          <input type="number" min="1" name="qtyInput"  value="1" id="qtyInput">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <select name="res_pet" class="utf_chosen_select_single">
+                <option label="Select Room">애완동물 동반</option>
+                 <option value=0 th:selected="${res_pet==0}">yes</option>
+                 <option value=1 th:selected="${res_pet==1}">no</option>
+           
+              </select>
+            </div>
+          </div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <select  name="res_parking" class="utf_chosen_select_single">
+                <option label="Select Room">주차장 사용여부</option>
+               <option value=0 th:selected="${res_parking==0}">사용</option>
+                    <option value=1 th:selected="${res_parking==1}">사용안함</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row with-forms margin-top-0">
+            <div class="col-lg-12 col-md-12">
+              <textarea name="res_message" id="" cols="30" rows="10" placeholder="host에게 전할 말" style="height: 100px;"></textarea>
+            </div>
+          </div>
+              <input type="hidden" name="suk_num" th:value="${sukso.suk_num}">
+              <div sec:authorize="isAuthenticated()">
+          <input type="submit" class="utf_progress_button button fullwidth_block margin-top-5" value="예약수정하기"></input>
+               </div>
+            
+          <div class="clearfix"></div>
+            
+          
+        </div>
+        </div>
+       
+        </form>
+		
+		
+		
+		
+		
+		
+  <div class="container">
+			<div class="row utf_sticky_main_wrapper">
+				<div class="col-lg-8 col-md-8">
+					<div id="titlebar" class="utf_listing_titlebar">
+						<div class="utf_listing_titlebar_title">
+							<h2>
+								<span class="listing-tag" th:text="${sukso.suk_name}">Apartment</span>
+							</h2>
+							<span> <a href="#utf_listing_location"
+								class="listing-address"> <i class="sl sl-icon-location"></i>
+									<b th:text="${sukso.suk_address}"></b>
+							</a>
+							</span> <span class="call_now"><i class="sl sl-icon-phone"></i> <b
+								th:text="${sukso.suk_name}"></b></span>
+							<div class="utf_star_rating_section" data-rating="4.5">
+								<div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+							</div>
+							<ul class="listing_item_social">
+								<li><a href="#"><i class="fa fa-bookmark"></i> Bookmark</a></li>
+								<li><a href="#utf_add_comment"><i class="fa fa-star"></i>
+										Add Review</a></li>
+								<li><a href="#"><i class="fa fa-flag"></i> Featured</a></li>
+								<li><a href="#"><i class="fa fa-share"></i> Share</a></li>
+								<li><a href="#" class="now_open">Open Now</a></li>
+							</ul>
+	
+
+
+        
+       	<div id="utf_listing_location" class="utf_listing_section">
+						<h3
+							class="utf_listing_headline_part margin-top-60 margin-bottom-40">Location</h3>
+
+						<div id="utf_single_listing_map_block">
+		<body onload="ka_execDaumPostcode()">						
+<input type="hidden"  id="suk_address" th:value="${sukso.suk_address}">
+ <input type="hidden" id="x" name="x">				
+<div id="map" style="position:relative;overflow:hidden;">
+
+    <input type="hidden" id="y" name="y">
+
+   </div>
+   </body>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16f9cd8afa5170203e0604da861a571c&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
+contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
+markers = [], // 마커를 담을 배열입니다
+currCategory = '';
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+addrInput = document.getElementById('suk_address'); // 주소를 입력받을 hidden input
+
+//주소-좌표 변환 객체를 생성
+var geocoder = new daum.maps.services.Geocoder();
+
+//초기 지도 중심 좌표
+var initLatLng = new daum.maps.LatLng(37.537187, 127.005476);
+
+//지도를 미리 생성
+var map = new daum.maps.Map(mapContainer, {
+center: initLatLng,
+level: 5
+});
+
+//마커를 생성하고 지도에 추가
+var marker = new daum.maps.Marker({
+position: initLatLng,
+map: map
+});
+var ps = new kakao.maps.services.Places(map); 
+
+//지도에 idle 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'idle', searchPlaces);
+
+//커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다 
+contentNode.className = 'placeinfo_wrap';
+
+//커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
+//지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다 
+addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
+
+//커스텀 오버레이 컨텐츠를 설정합니다
+placeOverlay.setContent(contentNode);  
+
+//각 카테고리에 클릭 이벤트를 등록합니다
+addCategoryClickEvent();
+
+//엘리먼트에 이벤트 핸들러를 등록하는 함수입니다
+function addEventHandle(target, type, callback) {
+ if (target.addEventListener) {
+     target.addEventListener(type, callback);
+ } else {
+     target.attachEvent('on' + type, callback);
+ }
+}
+
+//카테고리 검색을 요청하는 함수입니다
+function searchPlaces() {
+ if (!currCategory) {
+     return;
+ }
+ 
+ // 커스텀 오버레이를 숨깁니다 
+ placeOverlay.setMap(null);
+
+ // 지도에 표시되고 있는 마커를 제거합니다
+ removeMarker();
+ 
+ ps.categorySearch(currCategory, placesSearchCB, {useMapBounds:true}); 
+}
+
+//장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+ if (status === kakao.maps.services.Status.OK) {
+
+     // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
+     displayPlaces(data);
+ } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+     // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+
+ } else if (status === kakao.maps.services.Status.ERROR) {
+     // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+     
+ }
+}
+
+//지도에 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+ // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
+ // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
+ var order = document.getElementById(currCategory).getAttribute('data-order');
+
+ 
+
+ for ( var i=0; i<places.length; i++ ) {
+
+         // 마커를 생성하고 지도에 표시합니다
+         var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
+
+         // 마커와 검색결과 항목을 클릭 했을 때
+         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+         (function(marker, place) {
+             kakao.maps.event.addListener(marker, 'click', function() {
+                 displayPlaceInfo(place);
+             });
+         })(marker, places[i]);
+ }
+}
+
+//마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, order) {
+ var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+     imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
+     imgOptions =  {
+         spriteSize : new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
+         spriteOrigin : new kakao.maps.Point(46, (order*36)), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+         offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+     },
+     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+         marker = new kakao.maps.Marker({
+         position: position, // 마커의 위치
+         image: markerImage 
+     });
+
+ marker.setMap(map); // 지도 위에 마커를 표출합니다
+ markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+ return marker;
+}
+
+//지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+ for ( var i = 0; i < markers.length; i++ ) {
+     markers[i].setMap(null);
+ }   
+ markers = [];
+}
+
+//클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+function displayPlaceInfo (place) {
+ var content = '<div class="placeinfo">' +
+                 '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
+
+ if (place.road_address_name) {
+     content += '    <span title="' + place.road_address_name + '">' + place.road_address_name + '</span>' +
+                 '  <span class="jibun" title="' + place.address_name + '">(지번 : ' + place.address_name + ')</span>';
+ }  else {
+     content += '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+ }                
+
+ content += '    <span class="tel">' + place.phone + '</span>' + 
+             '</div>' + 
+             '<div class="after"></div>';
+
+ contentNode.innerHTML = content;
+ placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+ placeOverlay.setMap(map);  
+}
+
+
+//각 카테고리에 클릭 이벤트를 등록합니다
+function addCategoryClickEvent() {
+ var category = document.getElementById('ka_category'),
+     children = category.children;
+
+ for (var i=0; i<children.length; i++) {
+     children[i].onclick = onClickCategory;
+ }
+}
+
+//카테고리를 클릭했을 때 호출되는 함수입니다
+function onClickCategory() {
+ var id = this.id,
+     className = this.className;
+
+ placeOverlay.setMap(null);
+
+ if (className === 'on') {
+     currCategory = '';
+     changeCategoryClass();
+     removeMarker();
+ } else {
+     currCategory = id;
+     changeCategoryClass(this);
+     searchPlaces();
+ }
+}
+
+//클릭된 카테고리에만 클릭된 스타일을 적용하는 함수입니다
+function changeCategoryClass(el) {
+ var category = document.getElementById('ka_category'),
+     children = category.children,
+     i;
+
+ for ( i=0; i<children.length; i++ ) {
+     children[i].className = '';
+ }
+
+ if (el) {
+     el.className = 'on';
+ } 
+} 
+
+
+function ka_execDaumPostcode() {
+    // 현재 주소를 가져와서 좌표를 검색하기 위해
+    // 입력 받을 hidden input 필드를 생성하여 값 할당
+    var currentAddr = addrInput.value;
+    if (currentAddr === '') {
+        currentAddr = '서울특별시 강남구 테헤란로 152';
+    }
+
+    // 주소로 좌표를 검색
+    geocoder.addressSearch(currentAddr, function(results, status) {
+        if (status === daum.maps.services.Status.OK) {
+            // 검색 결과가 있으면 첫번째 결과를 사용
+            var result = results[0];
+            var coords = new daum.maps.LatLng(result.y, result.x);
+
+            // 지도를 해당 좌표로 이동
+            map.setCenter(coords);
+            marker.setPosition(coords);
+
+            // 주소와 좌표 값을 hidden input 필드에 업데이트
+            addrInput.value = result.address;
+            document.getElementById("x").value = result.x;
+            document.getElementById("y").value = result.y;
+
+            // 지도를 보여주기 위해 display 속성 변경
+            mapContainer.style.display = 'block';
+        } else {
+            alert('주소 검색 실패: ' + status);
+        }
+    });
+}
+	
+</script>						
+					</div>
+       
+		  
+	
+
+
+				
+      
+      
+      
+      
+      
+      
+      <!-- Sidebar -->
+      
+
+
+
+  <!-- Footer -->
+  <div id="bottom_backto_top"><a href="#"></a></div>
+</div>
+
+<!-- Scripts --> 
+<script src="../scripts/jquery-3.4.1.min.js"></script>
+	<script src="../scripts/chosen.min.js"></script>
+	<script src="../scripts/slick.min.js"></script>
+	<script src="../scripts/rangeslider.min.js"></script>
+	<script src="../scripts/magnific-popup.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/mmenu.js"></script>
+	<script src="../scripts/tooltips.min.js"></script>
+	<script src="../scripts/color_switcher.js"></script>
+	<script src="../scripts/jquery_custom.js"></script>
+
+
+<script src="../scripts/infobox.min.js"></script> 
+<script src="../scripts/markerclusterer.js"></script> 
+<script src="../scripts/maps.js"></script>
+<link href="../css/datedropper.css" rel="stylesheet" type="text/css">
+<script src="../scripts/datedropper.js"></script> 
+<script src="../scripts/quantityButtons.js"></script>
+<script src="../scripts/moment.min.js"></script>
+<script src="../scripts/daterangepicker.js"></script>
+
+<script>
+$(function() {
+	$('#date-picker').daterangepicker({
+		"opens": "left",
+		// singleDatePicker: true,
+		isInvalidDate: function(date) {
+			var disabled_start = moment('09/02/2018', 'DD/MM/YYYY');
+			var disabled_end = moment('06/09/2018', 'DD/MM/YYYY');
+		return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+		}
+	}, function(start, end, label) {
+	    $('#res_resdate').val(start.format('YYYY-MM-DD'));
+	    $('#res_outdate').val(end.format('YYYY-MM-DD'));
+	  });
+});
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+</script>
+</body>
+</html>

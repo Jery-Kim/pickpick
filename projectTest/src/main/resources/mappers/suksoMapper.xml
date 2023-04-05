@@ -1,0 +1,183 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.SuksoDAO">
+
+	<!-- 회원정보 저장 -->
+	<insert id="insertsukso" parameterType="sukso">
+	<selectKey resultType="int" keyProperty="suk_num" order="BEFORE">
+		select PP_sukso_seq.nextval from dual
+	</selectKey>
+		insert into PP_sukso (
+		suk_num
+		, suk_name
+		, mem_id
+		, suk_address
+		, suk_location
+		, suk_nearby
+	    , suk_price1
+	   
+		<if test="suk_files_orz !=null and suk_files_saved !=null">
+			,suk_files_orz
+			,suk_files_saved
+		</if>
+		)
+		values (
+		 #{suk_num}
+		, #{suk_name}
+		, #{mem_id}
+		, #{suk_address}
+		, #{suk_location}
+		, #{suk_nearby}
+		, #{suk_price1}
+	    
+		<if test="suk_files_orz !=null and suk_files_saved !=null">
+			,#{suk_files_orz}
+			,#{suk_files_saved}
+		</if>
+		)
+	</insert>
+	<insert id="insertspec" parameterType="sukso_spec">
+	
+		insert into PP_suk_spec(
+		  suk_num
+		, suk_bed
+		, suk_restroom
+		, suk_parking 
+		, suk_kitchin
+		, suk_bbq
+	    , suk_maxmember
+	    , suk_cctv
+	    , suk_pet
+	    , suk_floor
+	    , suk_elev
+	    , suk_wifi
+	    , suk_laundary
+	    , suk_notice 
+		)
+		values (
+		  #{suk_num}
+		, #{suk_bed}
+		, #{suk_restroom}
+		, #{suk_parking}
+		, #{suk_kitchin}
+		, #{suk_bbq}
+		, #{suk_maxmember}
+	    , #{suk_cctv}
+	    , #{suk_pet}
+	    , #{suk_floor}
+	    , #{suk_elev}
+	    , #{suk_wifi}
+	    , #{suk_laundary}
+	    , #{suk_notice}
+		)
+	</insert>
+		
+	
+	
+	
+
+	<select id="selectSuksoList" parameterType="map" resultType="Sukso">
+  SELECT *
+  FROM PP_Sukso
+  <trim prefix="WHERE" prefixOverrides="AND |OR ">
+    <if test="suk_location != null and suk_location != ''">
+      AND suk_location=#{suk_location}
+    </if>
+    <if test="suk_nearby != null and suk_nearby != ''">
+      AND suk_nearby=#{suk_nearby}
+    </if>
+  </trim>
+</select>
+
+	<select id="selectSukso" parameterType="int" resultType="sukso">
+		select
+		*
+		from
+		PP_Sukso
+		where suk_num=#{suk_num}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*)
+		from
+		PP_Sukso
+		order by suk_num desc
+	</select>
+
+
+<select id="find" parameterType="String"
+		resultType="member">
+		select
+		*
+		from
+		PP_member
+		where mem_id=#{mem_id}
+
+	</select>
+<insert id="writeReview" parameterType="review">
+		insert into PP_review (
+		rev_num
+		,suk_num
+		
+		,mem_id
+		,rev_star_clean
+		,rev_contents
+		<if test="rev_files_orz !=null and rev_files_saved !=null">
+			,rev_files_orz
+			,rev_files_saved
+		</if>
+		)
+		values (
+		PP_review_seq.NEXTVAL
+		, #{suk_num}
+		
+		, #{mem_id}
+		, #{rev_star_clean}
+		, #{rev_contents}
+		<if test="rev_files_orz !=null and rev_files_saved !=null">
+			,#{rev_files_orz}
+			,#{rev_files_saved}
+		</if>
+		)
+	</insert>
+
+<select id="readReview" parameterType="int" resultType="review">
+		select
+		*
+		from
+		PP_review
+		where suk_num=#{suk_num}  order by rev_star_clean desc
+	</select>
+	
+<select id="readRev" parameterType="int" resultType="review">
+		select
+		*
+		from
+		PP_review
+		where rev_num=#{rev_num}
+	</select>
+<select id="rev_count" parameterType="int" resultType="int">
+		select count(*)
+		from
+		PP_review where suk_num=#{suk_num}
+</select>
+<!--  -->
+<insert id="insertphoto" parameterType="ArrayList">
+insert into PP_suk_files(
+suk_files_num,
+suk1_files_orz,
+suk1_files_saved,
+suk_num)
+	values(
+	#{suk_files_num}
+	,#{suk1_files_orz}
+	,#{suk1_files_saved}
+	,#{suk_num})
+
+</insert>
+
+
+
+</mapper>

@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.DenyDAO">
+
+<!-- 회원정보 저장 -->
+<insert id="insertDeny" parameterType="deny">
+  insert into PP_deny (
+        deny_num
+		,mem_id
+		, deny_title
+		,deny_contents
+		<if test="deny_files_orz !=null and deny_files_saved !=null">
+		,deny_files_orz
+		,deny_files_saved
+		</if>
+	) 
+    values (
+        PP_deny_seq.NEXTVAL
+		 , #{mem_id}
+		, #{deny_title}
+		, #{deny_contents}
+		<if test="deny_files_orz !=null and deny_files_saved !=null">
+		, #{deny_files_orz}
+		, #{deny_files_saved}	
+		</if>
+	)
+</insert>
+<select id="selectDenyList" resultType="Deny">
+	select 
+		*
+	from 
+		PP_deny
+</select>
+
+<select id="read_denyReply" parameterType="int" resultType="Deny_Comment">
+select
+*
+From PP_deny_comment
+ where deny_num=#{deny_num}
+</select>
+
+<select id="read" parameterType="int" resultType="Deny">
+	select 
+	*
+	from 
+		PP_deny
+	where deny_num=#{deny_num}
+</select>
+
+
+
+<insert id="insertReply" parameterType="Deny_Comment">
+insert into PP_deny_Comment(
+deny_comment_num           
+,deny_num
+,deny_comment_contents  
+,mem_id )
+ values (
+ PP_deny_comment_seq.NEXTVAL
+,#{deny_num}
+,#{deny_comment_contents}  
+,#{mem_id}
+ )
+</insert>
+<delete  id="deleteReply" parameterType="Deny_Comment">
+delete PP_deny_Comment
+where deny_comment_num=#{deny_comment_num} and mem_id=#{mem_id}
+</delete>
+
+
+
+</mapper>

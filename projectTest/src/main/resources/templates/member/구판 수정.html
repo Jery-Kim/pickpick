@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet">
+<script>
+function validation() {
+	let memberpw = document.getElementById('mem_password');
+	let memberpw2 = document.getElementById('mem_password2');
+	let membername = document.getElementById('mem_nickname');
+
+	if (memberpw.value != memberpw2.value) {
+		alert("비밀번호를 정확하게 입력하세요.");
+		return false;
+	}	
+	if (mem_nickname.value == '') {
+		alert("이름을 입력하세요.");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<header>
+	<h1>[ 개인정보 수정 ]</h1>
+	</header>
+
+
+	<section>
+	<form th:action="@{/member/update}"  method="post" onsubmit="return validation();">
+	<table>
+	<tr>
+			<th>비밀번호</th>
+			<td><input type="password" name="mem_password" id="mem_password" placeholder="비밀번호 입력"><br>
+			<input type="password" id="mem_password2" placeholder="비밀번호 다시 입력"></td>
+		</tr>
+		<tr>
+			<th>닉네임</th>
+			<td><input type="text" name="mem_nickname" id="mem_nickname" placeholder="이름 입력" th:value="${member.mem_nickname}"></td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td><input type="text" name="mem_email" id="mem_email" placeholder="이메일 입력" th:value="${member.mem_email}"></td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td><input type="text" name="mem_phone" placeholder="전화번호 입력" th:value="${member.mem_phone}"></td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td><input type="text" name="mem_address" placeholder="주소 입력" style="width:300px;" th:value="${member.mem_address}"></td>
+		</tr>
+		<tr>
+			<th>성별</th>
+			<td> <select name="mem_gender">
+                      <option value='MALE' th:selected="${mem_gender == 'MALE'}">MALE</option>
+                      <option value='FEMALE' th:selected="${mem_gender == 'FEMALE'}">FEMALE</option>
+                      <option value='NONE' th:selected="${mem_gender == 'NONE'}">NONE</option>
+                  </select></td>
+		</tr>
+	
+	</table>
+	<br>
+	
+	<input type="submit" value="수정" />
+	<input type="reset" value="다시 쓰기" />
+	
+	</form>	
+	</section>
+</body>
+</html>

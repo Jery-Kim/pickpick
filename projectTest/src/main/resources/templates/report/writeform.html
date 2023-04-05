@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>[글쓰기]</title>
+
+</head>
+<body>
+	<header>
+		<h1>[ 신고글 글쓰기 ]</h1>
+	</header>
+	<section>
+		<form id="writeForm" th:action="@{/report/writereport}" method="post"
+			enctype="multipart/form-data" onsubmit="return validation;">
+			<table>
+				<tr>
+					<th>제목</th>
+					<td><input type="text" name="rep_title" id="title"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><input type="text" name="rep_contents" id="contents"><br>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td><input type="file" name="upload"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="write center"><input type="submit"
+						value="저장" /></td>
+				</tr>
+
+			</table>
+			<br>
+
+		</form>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- start : head -->
+<head>
+<meta name="author" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PickPick</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="images/favicon.png">
+
+<!-- Style CSS -->
+<link rel="stylesheet" href="css/stylesheet.css">
+<link rel="stylesheet" href="css/mmenu.css">
+<link rel="stylesheet" href="css/style.css" id="colors">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800"
+	rel="stylesheet" type="text/css">
+<script>
+function idcheck(){
+	window.open('member/idcheck','win','top=100,left=500,width=400,height=400');
+}
+function nickname_check(){
+	window.open('member/nickname_check','win','top=100,left=500,width=400,height=400');
+}
+function email_check(){
+	window.open('member/email_check','win','top=100,left=500,width=400,height=400');
+}
+
+function validation() {
+let mem_id = $('#mem_id').val();
+let mem_password = $('#mem_password').val();
+let mem_nickname = $('#mem_nickname').val();
+let mem_phone = $('#mem_phone').val();
+
+if (mem_id.length < 3 || mem_id.length > 10) {
+	alert("ID는 3~10자로 입력하세요.");
+	return false;
+}
+if (mem_password.length < 3 || mem_password.length > 10) {
+	alert("비밀번호는 3~10자로 입력하세요.");
+	return false;
+}
+if ( mem_nickname == '') {
+	alert("이름을 입력하세요.");
+	return false;
+}
+if (mem_phone == '') {
+	alert("전화번호를 입력하세요.");
+	return false;
+}
+
+let mem_address1 = $('#mem_address1').val();
+let mem_address2 = $('#mem_address2').val()
+
+if (mem_address1 == '') {
+	alert("주소를 입력하세요.");
+	return false;
+}
+	
+document.getElementById('mem_address').value = mem_address1 + ' ' + mem_address2;
+
+return true;
+}
+
+
+	function pagingFormSubmit(currentPage) {
+
+		var form = document.getElementById('pagingForm');
+		var page = document.getElementById('page');
+		page.value = currentPage;
+		form.submit();
+	}
+	
+
+	
+	
+	
+</script>
+
+
+
+
+
+
+
+
+</head>
+<!-- end: head -->
+
+
+<body class="header-one">
+
+	<!-- Preloader Start -->
+	<div class="preloader">
+		<div class="utf-preloader">
+			<span></span> <span></span> <span></span>
+		</div>
+	</div>
+	<!-- Preloader End -->
+
+	<!-- Wrapper -->
+	<div id="main_wrapper">
+
+		<!-- Start : header -->
+		<header id="header_part" class="fullwidth">
+			<div id="header">
+				<div id="header_container" class="container">
+
+					<div class="utf_left_side">
+
+						<div id="logo">
+							<a th:href="@{/}">PickPick</a>
+						</div>
+
+
+						<div class="mmenu-trigger">
+							<button class="hamburger utfbutton_collapse" type="button">
+								<span class="utf_inner_button_box"> <span
+									class="utf_inner_section"></span>
+								</span>
+							</button>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
+
+
+					<div class="utf_right_side">
+						<div class="header_widget">
+
+							<!-- sign in -->
+							<a sec:authorize="not isAuthenticated()"
+								href="#dialog_signin_part"
+								class="button border sign-in popup-with-zoom-anim"> <i
+								class="fa fa-sign-in"></i> Sign In
+							</a>
+							
+							<div class="utf_user_menu" sec:authorize="isAuthenticated()">
+								<div class="utf_user_name">
+									<span><img src="images/dashboard-avatar.jpg" alt=""></span>
+								</div>
+								<ul>
+									<li><a th:href="@{/member/mypage}"><i class="sl sl-icon-user"></i> 마이페이지 </a></li>
+									<li><a th:href="@{/sukso/gwanli}"><i class="sl sl-icon-layers"></i> 관리페이지</a></li>
+									<li><a th:href="@{/member/logout}"><i class="sl sl-icon-power"></i> 로그아웃</a></li>
+									<li><a th:href="@{/sukso/insertsukso}"><i class="sl sl-icon-layers"></i>숙소등록</a></li>
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					<div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+						<div class="small_dialog_header">
+							<h3>Sign In</h3>
+						</div>
+						<div class="utf_signin_form style_one">
+							<ul class="utf_tabs_nav">
+								<li class=""><a href="#tab1">Log In</a></li>
+								<li><a href="#tab2">Register</a></li>
+							</ul>
+
+							<div class="tab_container alt">
+								<div class="tab_content" id="tab1" style="display: none;">
+									<form method="post" class="login" th:action="@{/member/login}"
+										id="loginForm">
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="username"> <input type="text"
+												class="input-text" name="mem_id" value=""
+												placeholder="Username" />
+											</label>
+										</p>
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="password"> <input class="input-text"
+												type="password" name="mem_password" placeholder="Password" />
+											</label>
+										</p>
+										<div class="utf_row_form utf_form_wide_block form_forgot_part">
+											<span class="lost_password fl_left"> <a
+												href="javascript:void(0);">Forgot Password?</a>
+											</span>
+											<div class="checkboxes fl_right">
+												<input id="remember-me" type="checkbox" name="check">
+												<label for="remember-me">Remember Me</label>
+											</div>
+										</div>
+										<div class="utf_row_form">
+											<input type="submit" class="button border margin-top-5"
+												name="login" value="Login" />
+										</div>
+										<div class="utf-login_with my-3">
+											<span class="txt">Or Login in With</span>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-6">
+												<a href="javascript:void(0);"
+													class="social_bt facebook_btn mb-0"><i
+													class="fa fa-facebook"></i> Facebook</a>
+											</div>
+											<div class="col-md-6 col-6">
+												<a href="javascript:void(0);"
+													class="social_bt google_btn mb-0"><i
+													class="fa fa-google"></i> Google</a>
+											</div>
+										</div>
+									</form>
+								</div>
+
+
+
+
+
+								<div class="tab_content" id="tab2" style="display: none;">
+									<form method="post" class="register"
+										th:action="@{/member/join}" onsubmit="return validation();">
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="ID"> <input type="text"
+												class="input-text" name="mem_id" id="mem_id"
+												readonly="readonly" placeholder="ID중복확인 이용 ↓" /> <input
+												type="button" value="ID중복확인" onclick="idcheck()">
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="password1"> <input class="input-text"
+												type="password" name="mem_password" id="mem_password"
+												placeholder="Password" />
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="email2"> <input type="text"
+												class="input-text" name="mem_email" id="mem_email"
+												placeholder="Email" readonly="readonly" /> <input
+												type="button" value="이메일 중복확인" onclick="email_check()">
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="nickname"> <input type="text"
+												class="input-text" name="mem_nickname" id="mem_nickname"
+												value="" placeholder="닉네임 중복확인 이용 ↓" readonly="readonly" />
+												<input type="button" value="닉네임 중복확인"
+												onclick="nickname_check()">
+											</label>
+										</p>
+
+										<!-- 전화번호, 주소, 성별, role -->
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="phoneNumber"> <input type="text"
+												class="input-text" name="mem_phone" id="mem_phone" value=""
+												placeholder="전화번호" />
+											</label>
+										</p>
+										<br>
+										<p class="utf_row_form utf_form_wide_block">
+
+											<label for="address"> <input type="text"
+												class="input-text" id="mem_address1" value=""
+												placeholder="주소" readonly="readonly" />
+											</label> <label for="address"> <input type="text"
+												class="input-text" id="mem_address2" value=""
+												placeholder="상세 주소" />
+											</label> <input type="hidden" id="mem_address" name="mem_address">
+											<input type="button" onclick="sample2_execDaumPostcode()"
+												value="주소찾기">
+
+
+											<script
+												src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+										<div id="layer"
+											style="display: none; position: fixed; overflow: hidden; z-index: 1; -webkit-overflow-scrolling: touch;">
+											<img
+												src="//t1.daumcdn.net/postcode/resource/images/close.png"
+												id="btnCloseLayer"
+												style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
+												onclick="closeDaumPostcode()" alt="닫기 버튼">
+										</div>
+
+										<script>
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layer');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+              
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          
+                document.getElementById("mem_address1").value = addr;
+                
+               
+                
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("mem_address2").focus();
+                
+                
+                
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_layer.style.display = 'none';
+            },
+            width : '100%',
+            height : '100%',
+            maxSuggestItems : 5
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition(){
+        var width = 400; //우편번호서비스가 들어갈 element의 width
+        var height = 400; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    } 
+</script>
+
+										</p>
+
+
+
+
+										<br>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="sex"> <select name="mem_gender">
+													<option value="">GENDER</option>
+													<option value='MALE' th:selected="${mem_gender == 'MALE'}">MALE♂</option>
+													<option value='FEMALE'
+														th:selected="${mem_gender == 'FEMALE'}">FEMALE♀</option>
+
+											</select>
+											</label>
+										</p>
+
+										<p class="utf_row_form utf_form_wide_block">
+											<label for="mem_role"> <select name="mem_role"
+												id="role">
+													<option value="">HOST or USER</option>
+													<option value="ROLE_HOST"
+														th:selected="${mem_role == 'ROLE_HOST'}">HOST</option>
+													<option value="ROLE_USER"
+														th:selected="${mem_role == 'ROLE_USER'}">USER</option>
+											</select>
+											</label>
+										</p>
+
+										<input type="submit" class="button border fw margin-top-10"
+											name="register" value="Register" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- end : .header div-->
+			</div>
+			<!-- end : header div-->
+		</header>
+		<!-- end : header -->
+
+
+		<div class="clearfix"></div>
+
+		<div
+			class="search_container_block home_main_search_part main_search_block"
+			data-background-image="images/mainpage_background.jpg">
+			<div class="main_inner_search_block">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 header_container">
+							<h4>Pick where you want to stay</h4>
+
+							<!-- start - search bar -->
+
+							<form id="pagingForm" method="get" th:action="@{/}">
+								<div class="main_input_search_part">
+									<div class="main_input_search_part_item">
+										<select name="suk_location" id="location">
+											<option value="" th:selected="${suk_location==''}">Location</option>
+											<option value="서울특별시" th:selected="${suk_location=='서울특별시'}">서울특별시</option>
+											<option value="경기도" th:selected="${suk_location=='경기도'}">경기도</option>
+											<option value="강원도" th:selected="${suk_location=='강원도'}">강원도</option>
+											<option value="충청북도" th:selected="${suk_location=='충청북도'}">충청북도</option>
+											<option value="충청남도" th:selected="${suk_location=='충청남도'}">충청남도</option>
+											<option value="전라북도" th:selected="${suk_location=='전라북도'}">전라북도</option>
+											<option value="전라남도" th:selected="${suk_location=='전라남도'}">전라남도</option>
+											<option value="경상북도" th:selected="${suk_location=='경상북도'}">경상북도</option>
+											<option value="경상남도" th:selected="${suk_location=='경상남도'}">경상남도</option>
+											<option value="제주특별자치도"
+												th:selected="${suk_location=='제주특별자치도'}">제주특별자치도</option>
+										</select>
+									</div>
+									<!-- 
+                <div class="main_input_search_part_item intro-search-field">
+                  <select data-placeholder="Nearby" class="selectpicker default" title="location"
+                    data-live-search="true" data-selected-text-format="count" data-size="5">
+                    <option>소분류1 </option>
+                    <option>소분류2</option>
+
+                  </select>
+                </div> -->
+
+
+
+									<div class="main_input_search_part_item intro-search-field">
+										<select data-placeholder="Nearby" class="selectpicker default"
+											title="All Categories" data-live-search="true"
+											data-selected-text-format="count" data-size="5"
+											name="suk_nearby" id="nearby">
+											<option value="바다" th:selected="${suk_nearby=='바다'}">바다</option>
+											<option value="산" th:selected="${suk_nearby=='산'}">산</option>
+											<option value="하천" th:selected="${suk_nearby=='하천'}">하천</option>
+											<option value="강" th:selected="${suk_nearby=='강'}">강</option>
+											<option value="도심" th:selected="${suk_nearby=='도심'}">도심</option>
+										</select>
+									</div>
+
+<input type="hidden" name="page" id="page" />
+
+									<button class="button main_input_search_part_item_btn"
+										onclick="pagingFormSubmit(1)">Search</button>
+							</form>
+
+							<!-- end - search bar -->
+						</div>
+						<!-- start : Popular Categories -->
+						<!-- <div class="main_popular_categories">
+                <h3>Popular Categories</h3>
+                <ul class="main_popular_categories_list">
+
+                  <li> <a href="">
+                      <div class="utf_box"> <i class="im im-icon-Dumbbell" aria-hidden="true"></i>
+                        <p>한옥</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li> <a href="">
+                      <div class="utf_box"> <i class="im im-icon-Electric-Guitar" aria-hidden="true"></i>
+                        <p>산</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li> <a href="">
+                      <div class="utf_box"> <i class="im im-icon-Hotel" aria-hidden="true"></i>
+                        <p>강가</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li> <a href="">
+                      <div class="utf_box"> <i class="im im-icon-Home-2" aria-hidden="true"></i>
+                        <p>로맨틱</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li> <a href="">
+                      <div class="utf_box"> <i class="im im-icon-Business-Man" aria-hidden="true"></i>
+                        <p>바닷가</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div> -->
+						<!-- end : Popular Categories -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col-md-12 listing_grid_item">
+		<div class="listing_filter_block margin-top-30">
+			<div class="col-md-3 col-xs-3">
+				
+			</div>
+			<div class="col-md-9 col-xs-9">
+				<div class="sort-by utf_panel_dropdown sort_by_margin float-right">
+					<a href="">Destination</a>
+					<div class="utf_panel_dropdown-content">
+						<input class="distance-radius" type="range" min="1" max="999"
+							step="1" value="1" data-title="Select Range">
+						<div class="panel-buttons">
+							<button class="panel-apply">Apply</button>
+						</div>
+					</div>
+				</div>
+				<div class="sort-by">
+					<div class="utf_sort_by_select_item sort_by_margin">
+						<select data-placeholder="Sort by Listing"
+							class="utf_chosen_select_single">
+							<option>Sort by Listing</option>
+							<option>Latest Listings</option>
+							<option>Popular Listings</option>
+							<option>Price (Low to High)</option>
+							<option>Price (High to Low)</option>
+							<option>Highest Reviewe</option>
+							<option>Lowest Reviewe</option>
+							<option>Newest Listing</option>
+							<option>Oldest Listing</option>
+							<option>Random Listings</option>
+						</select>
+					</div>
+				</div>
+				<div class="sort-by">
+					<div class="utf_sort_by_select_item sort_by_margin">
+						<select data-placeholder="Categories:"
+							class="utf_chosen_select_single">
+							<option>Categories</option>
+							<option>Restaurant</option>
+							<option>Health</option>
+							<option>Hotels</option>
+							<option>Real Estate</option>
+							<option>Fitness</option>
+							<option>Shopping</option>
+							<option>Travel</option>
+							<option>Shops</option>
+							<option>Nightlife</option>
+							<option>Events</option>
+						</select>
+					</div>
+				</div>
+				<div class="sort-by">
+					<div class="utf_sort_by_select_item utf_search_map_section">
+						<ul>
+							<li><a class="utf_common_button" href=""><i
+									class="fa fa-dot-circle-o"></i>Near Me</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+
+
+			<div class="col-md-4 col-lg-4 col-md-12"
+				th:each="suksolist : ${suksolist}">
+				<a th:href="@{/sukso/read(num=${suksolist.suk_num})}"
+					class="utf_listing_item-container" data-marker-id="1">
+					<div class="utf_listing_item">
+						<img th:src="@{/sukso/download(num=${suksolist.suk_num})}" alt="">
+						 <span class="featured_tag" th:text="${suksolist.suk_nearby}"></span>
+						<div class="utf_listing_item_content">
+							<div class="utf_listing_prige_block">
+								<span class="utf_meta_listing_price"><i class="fa fa-tag"></i>
+									$45 - $70</span> <span class="utp_approve_item"><i
+									class="utf_approve_listing"></i></span>
+							</div>
+							<h3>
+								<span></span>
+							</h3>
+							<span><i class="fa fa-map-marker"></i><span
+								th:text="${suksolist.suk_name}">></span></span> <span><i
+								class="fa fa-phone"></i> (+15) 124-796-3633</span>
+						</div>
+					</div>
+					<div class="utf_star_rating_section" data-rating="4.5">
+						<div class="utf_counter_star_rating">(4.5)</div>
+						<span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+						<span class="like-icon"></span>
+					</div>
+				</a>
+			</div>
+
+		</div>
+
+		<form>
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<div
+						class="utf_pagination_container_part margin-top-20 margin-bottom-75"
+						id="navigator">
+						<nav class="pagination">
+							<ul>
+								<li><a
+									th:href="|javascript:pagingFormSubmit(${navi.currentPage - 1})|"><i
+										class="sl sl-icon-arrow-left"></i></a></li>
+
+								<li><span
+									th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+										<th:block th:if="${counter == navi.currentPage}">
+											<b>
+										</th:block> <a th:text="${counter}"
+										th:href="|javascript:pagingFormSubmit(${counter})|"></a> <th:block
+											th:if="${counter == navi.currentPage}">
+											</b>
+										</th:block>
+								</span></li>
+
+								<li><a
+									th:href="|javascript:pagingFormSubmit(${navi.currentPage + 1})|"><i
+										class="sl sl-icon-arrow-right"></i></a></li>
+							</ul>
+						</nav>
+
+					</div>
+
+				</div>
+			</div>
+	</div>
+	
+	</form>
+
+
+
+
+	<div class="container padding-bottom-70">
+		<div class="row">
+			<!-- <div class="col-md-12">
+          <h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular
+            <span>Discover
+              best things to do restaurants, shopping, hotels, cafes and places<br>around the world by
+              categories.
+            </span>
+          </h3>
+          <input type="button" value="별점순 정렬" onclick="">
+        </div> -->
+
+			<!-- <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-01.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>Nightlife </h4>
+              <span>18 Listings</span>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-02.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>Shops</h4>
+              <span>24 Listings</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-03.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>Restaurant</h4>
+              <span>17 Listings</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-04.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>Outdoor Activities</h4>
+              <span>12 Listings</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-05.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>Hotels</h4>
+              <span>14 Listings</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="listings_list_with_sidebar.html" class="img-box"
+            data-background-image="images/popular-location-06.jpg">
+            <div class="utf_img_content_box visible">
+              <h4>New York</h4>
+              <span>9 Listings</span>
+            </div>
+          </a>
+        </div> -->
+			<!-- <div class="col-md-12 centered_content"> <a href="" class="button border margin-top-20">View More
+            Categories</a> </div>
+      </div> -->
+		</div>
+
+		<div><a th:href="@{/sukso/insertsukso}" style="background: red; color:white;">숙소등록</a></div>
+
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="scripts/jquery-3.4.1.min.js"></script>
+	<script src="scripts/chosen.min.js"></script>
+	<script src="scripts/slick.min.js"></script>
+	<script src="scripts/rangeslider.min.js"></script>
+	<script src="scripts/magnific-popup.min.js"></script>
+	<script src="scripts/jquery-ui.min.js"></script>
+	<script src="scripts/bootstrap-select.min.js"></script>
+	<script src="scripts/mmenu.js"></script>
+	<script src="scripts/tooltips.min.js"></script>
+	<script src="scripts/color_switcher.js"></script>
+	<script src="scripts/jquery_custom.js"></script>
+	<script src="scripts/typed.js"></script>
+	<script src="https://kit.fontawesome.com/eb509e8419.js"
+		crossorigin="anonymous"></script>
+	<script>
+		var typed = new Typed('.typed-words', {
+			strings : [ "Attractions", " Restaurants", " Hotels" ],
+			typeSpeed : 80,
+			backSpeed : 80,
+			backDelay : 4000,
+			startDelay : 1000,
+			loop : true,
+			showCursor : true
+		});
+	</script>
+
+</body>
+
+</html>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import net.softsociety.exam.domain.Reservation;
 import net.softsociety.exam.domain.bookSukso;
+
 @Mapper
 public interface ReservationDAO {
 
@@ -21,8 +22,6 @@ public interface ReservationDAO {
 
 	int countRes(String mem_id);
 
-	
-
-
+	Reservation getReservationByMemid(String mem_id);
 
 }

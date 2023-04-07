@@ -6,13 +6,14 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import net.softsociety.exam.domain.Intag;
 import net.softsociety.exam.domain.Member;
 import net.softsociety.exam.domain.Reservation;
 import net.softsociety.exam.domain.Review;
 import net.softsociety.exam.domain.Suk_files;
 import net.softsociety.exam.domain.Sukso;
 import net.softsociety.exam.domain.Sukso_spec;
-
+import net.softsociety.exam.domain.Tags;
 
 @Mapper
 public interface SuksoDAO {
@@ -20,8 +21,6 @@ public interface SuksoDAO {
 	int insertsukso(Sukso sukso);
 
 	Sukso selectSukso(int num);
-
-
 
 	int count(HashMap<String, String> map);
 
@@ -41,10 +40,8 @@ public interface SuksoDAO {
 
 	ArrayList<Suk_files> insertphoto();
 
-	
+	public int insert(Tags tags);
 
-
-
-
+	public int insert2(Intag intag);
 
 }

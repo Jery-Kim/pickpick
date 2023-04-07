@@ -31,6 +31,8 @@ public class WebSecurityConfig {
         		"/member/idcheck",
         		"/member/nickname_check",
         		"/member/email_check",
+        		"/tagify2",
+        		"/getTagifyList",
                 "/images/**",
                 "/css/**",
                 "/js/**",

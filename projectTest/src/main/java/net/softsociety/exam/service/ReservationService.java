@@ -19,4 +19,6 @@ public interface ReservationService {
 
 	int countRes(String mem_id);
 
+	Reservation getReservationByMemid(String mem_id);
+
 }

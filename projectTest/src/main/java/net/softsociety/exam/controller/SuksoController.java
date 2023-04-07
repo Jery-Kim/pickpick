@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
-import net.softsociety.exam.domain.Report_Comment;
-import net.softsociety.exam.domain.Reservation;
+import net.softsociety.exam.domain.Intag;
 import net.softsociety.exam.domain.Review;
 import net.softsociety.exam.domain.Suk_files;
 import net.softsociety.exam.domain.Sukso;
 import net.softsociety.exam.domain.Sukso_spec;
+import net.softsociety.exam.domain.Tags;
 import net.softsociety.exam.service.SuksoService;
 import net.softsociety.exam.util.FileService;
 import net.softsociety.exam.util.PageNavigator;
@@ -83,7 +83,7 @@ public class SuksoController {
 	}
 	
 	@PostMapping("join")
-	public String writeform(Suk_files file, Sukso sukso, Sukso_spec spec, @AuthenticationPrincipal UserDetails user, MultipartFile upload, MultipartFile upload1) {
+	public String writeform(Suk_files file, Sukso sukso, Sukso_spec spec, Tags tags, Intag intag, @AuthenticationPrincipal UserDetails user, MultipartFile upload, MultipartFile upload1) {
 		
 		if(upload!=null && !upload.isEmpty()) {
 			String filename=FileService.saveFile(upload, "c:/upload");
@@ -102,6 +102,10 @@ public class SuksoController {
 		log.debug("spec:{}", spec);
 		spec.setSuk_num(sukso.getSuk_num());
 		service.insertspec(spec);
+		service.insert(tags);
+		intag.setSuk_num(sukso.getSuk_num());
+		intag.setId(tags.getId());
+		service.insert2(intag);
 //			file.setSuk_num(sukso.getSuk_num());
 //			ArrayList<Suk_files> files= service.insertphoto();
 		
@@ -126,7 +130,6 @@ public class SuksoController {
 				service.getPageNavigator1(pagePerGroup, countPerPage, page, num);
 	
 		Sukso sukso=service.read(num);
-		
 		log.debug("bbbbbbaa:{}", sukso);
 		model.addAttribute("sukso", sukso);
 		ArrayList<Review> review=service.readReview(navi.getStartRecord(), countPerPage, num);
@@ -224,10 +227,7 @@ public class SuksoController {
 		 return "redirect:read?num=" + review.getSuk_num();
 	}
 
-	@GetMapping("gwanli")
-	public String gwanli() {
-		return "gwanli";
-	}
+	
 	
 	
 }

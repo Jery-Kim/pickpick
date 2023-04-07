@@ -1,0 +1,45 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.softsociety.exam.dao.BungDAO">
+	<!-- bung 글쓰기 -->
+	<insert id="bungWrite" parameterType="Bung">
+		insert into PP_bung(
+		bung_num
+		, bung_title
+		, bung_contents
+		, mem_id
+		, res_num
+		, suk_num
+		, bung_cate
+		) values(
+		PP_bung_seq.NEXTVAL
+		,
+		#{bung_title}
+		, #{bung_contents}
+		, #{mem_id}
+		, #{res_num}
+		, #{suk_num}
+		, #{bung_cate}
+		)
+	</insert>
+	<select id="list" resultType="Bung">
+		select * from PP_bung order by bung_num desc
+	</select>
+	<insert id="bungWriteComm" parameterType="BungComment">
+		insert into
+		PP_bung_comment(
+		bung_comm_num
+		, mem_ID
+		, bung_comment_contents
+		, bung_num
+		) values(
+		PP_bung_comment_seq.NEXTVAL
+		, #{mem_ID}
+		,
+		#{bung_comment_contents}
+		, #{bung_num}
+		)
+	</insert>
+</mapper>
+        

@@ -54,9 +54,10 @@ public class ReservationController {
 		res.setRes_price(qtyInput*suk_price*date);
 	    log.debug("reservation3:{}", res);
 	    String mem_id=user.getUsername();
-	    if (service.countRes(mem_id)>=1) {
-	    	return "redirect:read?suk_num=" + res.getSuk_num();
-	    }
+	    // 빼놓는다
+//	    if (service.countRes(mem_id)>=1) {
+//	    	return "redirect:read?suk_num=" + res.getSuk_num();
+//	    }
 	    
 		service.insertRes(res);
 		log.debug("reservation1:{}", res);

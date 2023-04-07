@@ -1,0 +1,69 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.TagDAO">
+
+<insert id="insert" parameterType="Tags">
+	<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		select tags_seq.nextval as seq from dual
+	</selectKey>
+	INSERT INTO
+		tags 
+	SELECT
+		seq
+		, #{name}
+	FROM
+		dual
+	WHERE NOT EXISTS (SELECT
+						name
+					  FROM
+					  	tags
+					  WHERE name = #{name})
+</insert>
+
+
+<!-- 리뷰에서 설정한 태그 입력 -->
+<!-- 
+<insert id="insert3" parameterType="Tags">
+	INSERT INTO
+		intag (id, suk_num, input_person) 
+	SELECT
+		seq
+		, #{suk_num} --> <!-- 여기다가 숙소 번호 가져와야함 --> <!-- 
+		, 10
+	FROM
+		dual
+	WHERE NOT EXISTS (SELECT
+						name
+					  FROM
+					  	tags
+					  WHERE name = #{name})
+</insert>
+ -->
+ 
+<!-- 
+<insert id="insert" parameterType="Tags">
+	<selectKey resultType="String" keyProperty="name" order="BEFORE">
+		select tags_seq.nextval from dual
+	</selectKey>
+ -->
+
+<select id="selectAll" resultType="Tags">
+	SELECT
+		*
+	FROM
+		tags
+</select>
+
+<select id="selectOne" resultType="Tags">
+	SELECT
+		*
+	FROM
+		tags
+	WHERE
+		name=#{name}
+</select>
+
+
+</mapper>
